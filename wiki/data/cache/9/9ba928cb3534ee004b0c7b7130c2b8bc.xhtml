@@ -1,0 +1,16 @@
+
+<h2 class="sectionedit1" id="mysql">MySQL</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT1 SECTION "MySQL" [1-19] -->
+<h3 class="sectionedit2" id="mysql_backup">MySQL Backup</h3>
+<div class="level3">
+
+<p>
+This code creates a mysqldump of a single database, <em>information_schemas</em>, creates a log, and names the file based on a YYYYMMDD format.
+</p>
+<pre class="code">C:\mysql\bin\mysqldump.exe --user=root --password=password --dump-date --database information_schemas --log-error=D:\DB_Backups\mySQLbackupLogs.txt --result-file=&quot;D:\DB_Backups\MySQL\%DATE:~10,4%%DATE:~4,2%%DATE:~7,2%.sql&quot;</pre>
+
+</div>
+<!-- EDIT2 SECTION "MySQL Backup" [20-] -->

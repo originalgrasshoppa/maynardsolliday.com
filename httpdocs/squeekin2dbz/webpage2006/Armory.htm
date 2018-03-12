@@ -1,0 +1,65 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Armory</title>
+
+
+
+<script type="text/javascript">
+
+/***********************************************
+* Disable select-text script- © Dynamic Drive (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+//form tags to omit in NS6+:
+var omitformtags=["input", "textarea", "select"]
+
+omitformtags=omitformtags.join("|")
+
+function disableselect(e){
+if (omitformtags.indexOf(e.target.tagName.toLowerCase())==-1)
+return false
+}
+
+function reEnable(){
+return true
+}
+
+if (typeof document.onselectstart!="undefined")
+document.onselectstart=new Function ("return false")
+else{
+document.onmousedown=disableselect
+document.onmouseup=reEnable
+}
+
+</script>
+
+
+
+</head>
+
+<body background="armory.jpg">
+
+<p><span style="background-color: #FFFF00">Get your weapon and let's move out.</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .</p>
+<div style="position: absolute; width: 100px; height: 100px; z-index: 1; left: 784px; top: 72px" id="layer1">
+	<span style="text-decoration: none">
+	<a href="Hangar.htm">
+	<font color="#000000"><span style="text-decoration: none">What's over here?</span></font></a></span></div>
+<div style="position: absolute; width: 100px; height: 100px; z-index: 3; left: 435px; top: 288px" id="layer3">
+	<a href="Tickles.htm"><span style="text-decoration: none">
+	<font color="#000000">.</font></span></a></div>
+<p>&nbsp;</p>
+<div style="position: absolute; width: 100px; height: 100px; z-index: 2; left: 610px; top: 283px" id="layer2">
+	<span style="text-decoration: none">
+	<a href="Cannonball.htm">
+	<font color="#000000">.</font></a></span></div>
+
+</body>
+
+</html>

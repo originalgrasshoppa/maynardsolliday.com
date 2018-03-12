@@ -1,0 +1,142 @@
+
+<h3 class="sectionedit1" id="to_update_the_repository_for_plesk_node_updates">To update the repository for Plesk node updates</h3>
+<div class="level3">
+
+<p>
+Run the update command on the management node:
+</p>
+<pre class="code">yum update</pre>
+
+<p>
+Follow this with the following:
+</p>
+<pre class="code">yes | cp -r /usr/local/pem/install/tarballs/RHEL/6 /usr/local/pem/install/tarballs/CentOS/</pre>
+
+<p>
+Then you can run the update command on each node in order to pull the updates from the management node.  (This does not apply to the MSSQL node.)
+</p>
+
+</div>
+<!-- EDIT1 SECTION "To update the repository for Plesk node updates" [1-418] -->
+<h3 class="sectionedit2" id="deal_with_file_bloat">Deal with file bloat</h3>
+<div class="level3">
+
+<p>
+Command to locate files:
+</p>
+<pre class="code">du -a /root | sort -n -r | head -n 50</pre>
+
+<p>
+Command to see sizes in directory:
+</p>
+<pre class="code">du -sx /var/cache/ppa/updates/PPA_11.5.0/* | sort -n -r | head -n 50</pre>
+
+<p>
+Move big folders to temp dir for deletion later:
+</p>
+<pre class="code">mv /var/cache/ppa/updates/PPA_11.5.0/UPDATE_03 ArchiveForDeletion_2016030201/UPDATE_03</pre>
+
+</div>
+<!-- EDIT2 SECTION "Deal with file bloat" [419-802] -->
+<h3 class="sectionedit3" id="ip_does_not_belong_to_any_ip_pool_but_is_listed_on_ip_addresses_tab">IP does not belong to any IP pool, but is listed on &quot;IP Addresses&quot; tab.</h3>
+<div class="level3">
+
+<p>
+The IP is not used by any service. The difference is that information about it is stored in both, &#039;psa&#039; and &#039;plesk&#039; databases this time.
+</p>
+
+<p>
+&#039;Plesk&#039; database is running on PostgreSQL engine. To connect it, the following command has to be issued:
+</p>
+<pre class="code">psql -Uplesk -h`hostname` plesk</pre>
+
+<p>
+IP Address was storing in &#039;psa.IP_Addresses&#039; table under id 16. To solve the issue, remove two records from &#039;psa&#039; database:
+</p>
+<pre class="code">delete from IP_Addresses where id = 16;</pre>
+
+<p>
+Expected output:
+Query OK, 1 row affected (0.01 sec)
+</p>
+
+<p>
+(and to avoid inconsistency):
+</p>
+<pre class="code">delete from ip_pool where ip_address_id = 16;</pre>
+
+<p>
+Expected output:
+Query OK, 1 row affected (0.01 sec)
+</p>
+
+<p>
+one record from &#039;plesk&#039; db:
+</p>
+<pre class="code">delete from configured_ips where ip_id = 24;</pre>
+
+<p>
+After these commands are used the IP address is not listed in PA control panel.
+</p>
+
+</div>
+<!-- EDIT3 SECTION "IP does not belong to any IP pool, but is listed on IP Addresses tab." [803-1726] -->
+<h3 class="sectionedit4" id="backups_not_occurring_at_correct_time">Backups Not Occurring at Correct Time</h3>
+<div class="level3">
+
+<p>
+The backup task is executed by Plesk utility backupmng that is launched from root crontab:
+/etc/cron.d/plesk-backup-manager-task 
+</p>
+<pre class="code">1,16,31,46	*	*	*	*	root [ -x /usr/local/psa/admin/sbin/backupmng ] &amp;&amp; /usr/local/psa/admin/sbin/backupmng &gt;/dev/null 2&gt;&amp;1</pre>
+
+<p>
+Sign in to mysql:
+</p>
+<pre class="code">mysql -uadmin -p`cat /etc/psa/.psa.shadow ` psa</pre>
+
+<p>
+Pull a list of all scheduled backups:
+</p>
+<pre class="code">select obj_id, obj_type, last, period, active, backup_time from BackupsScheduled;</pre>
+
+<p>
+The utility compares values of psa.BackupsScheduled.last and psa.BackupsScheduled.period in Plesk database, then starts backup if current time is more than (BackupsScheduled.last + BackupsScheduled.period), not in time set in BackupsScheduled.backup_time as it is configured.
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> obj_id </td><td class="col1"> obj_type </td><td class="col2 leftalign"> last                </td><td class="col3 leftalign"> period  </td><td class="col4"> active </td><td class="col5"> backup_time </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 rightalign">     42 </td><td class="col1 leftalign"> domain   </td><td class="col2"> 2016-04-24 11:36:41 </td><td class="col3 rightalign">   86400 </td><td class="col4 leftalign"> true   </td><td class="col5 leftalign"> 03:30:00    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 rightalign">    458 </td><td class="col1 leftalign"> domain   </td><td class="col2"> 2016-04-24 11:33:37 </td><td class="col3 rightalign">   86400 </td><td class="col4 leftalign"> true   </td><td class="col5 leftalign"> 08:47:00    </td>
+	</tr>
+</table></div>
+<!-- EDIT5 TABLE [2540-2770] -->
+<p>
+Empty the value for the “last” backup to force the next backup to happen at the scheduled time:
+</p>
+<pre class="code">begin;
+update psa.BackupsScheduled set last=&#039;&#039; where obj_id=42;
+commit;</pre>
+
+<p>
+Check that the value was changed correctly:
+</p>
+<pre class="code">select obj_id, obj_type, last, period, active, backup_time from BackupsScheduled;</pre>
+<div class="table sectionedit6"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> obj_id </td><td class="col1"> obj_type </td><td class="col2 leftalign"> last                </td><td class="col3 leftalign"> period  </td><td class="col4"> active </td><td class="col5"> backup_time </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 rightalign">     42 </td><td class="col1 leftalign"> domain   </td><td class="col2"> 0000-00-00 00:00:00 </td><td class="col3 rightalign">   86400 </td><td class="col4 leftalign"> true   </td><td class="col5 leftalign"> 03:30:00    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 rightalign">    458 </td><td class="col1 leftalign"> domain   </td><td class="col2"> 2016-04-24 11:33:37 </td><td class="col3 rightalign">   86400 </td><td class="col4 leftalign"> true   </td><td class="col5 leftalign"> 08:47:00    </td>
+	</tr>
+</table></div>
+<!-- EDIT6 TABLE [3099-3329] -->
+</div>
+<!-- EDIT4 SECTION "Backups Not Occurring at Correct Time" [1727-] -->

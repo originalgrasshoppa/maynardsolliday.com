@@ -1,0 +1,10 @@
+=== Finding Failed Emails ===
+
+**The following command is a linux application, so can only be run through a linux emulator, such as Cygwin, in a windows environment**
+\\
+\\
+This command searches recursively, ignoring case, the SMTP activity log for bad email addresses, then dumps the output or results in a file named "haysrecemail.txt" at the root of the D drive.
+
+<code>
+grep -r -i "Recipient address rejected: User unknown in relay recipient table" /cygdrive/d/Program\ Files\ \(x86\)/Parallels/Plesk/Mail\ Servers/Mail\ Enable/Logging/SMTP/SMTP-Activity-*.log > /cygdrive/d/haysrecemail.txt
+</code>

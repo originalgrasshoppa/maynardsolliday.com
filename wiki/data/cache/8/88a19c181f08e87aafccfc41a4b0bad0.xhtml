@@ -1,0 +1,22 @@
+
+<h2 class="sectionedit1" id="cygwin">Cygwin</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT1 SECTION "Cygwin" [1-20] -->
+<h3 class="sectionedit2" id="delete_old_files">Delete old files</h3>
+<div class="level3">
+
+<p>
+Create a batch file and paste the following into it.
+</p>
+<pre class="code">c:\cygwin\bin\find /cygdrive/d/MSSQLBU/bak -mtime +0 -iname &#039;*.bak&#039; -delete</pre>
+
+</div>
+<!-- EDIT2 SECTION "Delete old files" [21-190] -->
+<h3 class="sectionedit3" id="split_text_files_into_smaller_files">Split text files into smaller files</h3>
+<div class="level3">
+<pre class="code">split --bytes 5M /cygdrive/f/newfile.txt /cygdrive/f/dbo.txt</pre>
+
+</div>
+<!-- EDIT3 SECTION "Split text files into smaller files" [191-] -->

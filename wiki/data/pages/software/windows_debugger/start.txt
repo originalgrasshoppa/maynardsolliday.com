@@ -1,0 +1,11 @@
+===== Windows Debugger =====
+
+<code>
+"C:\Program Files (x86)\Windows Kits\8.0\Debuggers\x64\windbg" -y srv*C:\symbols*http://msdl.microsoft.com/download/symbols -i E:\sources -z c:\users\sollidm\Desktop\041413-41093-01.dmp
+</code>
+
+or
+
+<code>
+windbg -y srv*C;\symbols*http://msdl.microsoft.com/download/symbols -i d:\i386 -z c:\windows\minidump\mini012808-01.dmp
+</code>

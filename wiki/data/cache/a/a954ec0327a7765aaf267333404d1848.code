@@ -1,0 +1,36 @@
+<span class="co1">#How old file files to delete (in days) </span>
+<span class="re0">$days</span> <span class="sy0">=</span> <span class="nu0">15</span>
+&nbsp;
+<span class="co1">#Folder to start looking in (recursively) </span>
+<span class="re0">$targetFolder</span> <span class="sy0">=</span> <span class="st0">&quot;D:\DB_Backups&quot;</span>
+&nbsp;
+&nbsp;
+<span class="co1">#Get the current date.</span>
+<span class="re0">$currentDate</span> <span class="sy0">=</span> <span class="kw1">Get-Date</span>
+&nbsp;
+<span class="co1">#Compute the delete date.</span>
+<span class="re0">$deleteDate</span> <span class="sy0">=</span> <span class="re0">$currentDate</span>.AddDays<span class="br0">&#40;</span><span class="sy0">-</span><span class="re0">$days</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Get a list of all the old files</span>
+<span class="re0">$oldFiles</span> <span class="sy0">=</span> <span class="kw1">get-childitem</span> <span class="re0">$targetFolder</span> <span class="kw5">-recurse</span> <span class="sy0">|</span> <span class="kw3">Where</span> <span class="br0">&#123;</span><a href="about:blank"><span class="kw6">$_</span></a>.lastWriteTime <span class="kw4">-le</span> <span class="re0">$deleteDate</span><span class="br0">&#125;</span>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="kw1">write-host</span> <span class="re0">$deleteDate</span>
+&nbsp;
+<span class="co1">#Remove the old files</span>
+<span class="kw3">foreach</span> <span class="br0">&#40;</span><span class="re0">$file</span> <span class="kw3">in</span> <span class="re0">$oldFiles</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+&nbsp;
+    <span class="kw3">if</span><span class="br0">&#40;</span><span class="re0">$oldFiles</span> <span class="kw4">-eq</span> <span class="re0">$null</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+        <span class="kw1">write-host</span> <span class="st0">&quot;No files to delete.&quot;</span>
+        <span class="kw3">break</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">write-host</span> <span class="st0">&quot;Removing file: &quot;</span> <span class="re0">$file</span>.FullName;
+&nbsp;
+    <span class="co1">#delete the file</span>
+    <span class="kw1">Remove-Item</span> <span class="kw5">-Force</span> <span class="kw5">-Recurse</span> <span class="re0">$file</span>.FullName
+&nbsp;
+&nbsp;
+<span class="br0">&#125;</span>

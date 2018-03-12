@@ -1,0 +1,4 @@
+cd <span class="sy0">%</span>windir<span class="sy0">%</span>\system32\inetsrv
+appcmd.exe set config <span class="sy0">-</span>section<span class="co2">:system.applicationHost/sites /siteDefaults.logFile.enabled:&quot;True&quot; /commit:apphost</span>
+appcmd.exe set config <span class="sy0">-</span>section<span class="co2">:system.applicationHost/sites /siteDefaults.logFile.logFormat:&quot;W3C&quot; /commit:apphost</span>
+appcmd.exe set config <span class="sy0">-</span>section<span class="co2">:system.applicationHost/sites /siteDefaults.logFile.directory:&quot;%SystemDrive%\inetpub\logs\LogFiles&quot; /commit:apphost</span>

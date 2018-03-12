@@ -1,0 +1,40 @@
+a:102:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:20:"General MSSQL Issues";i:1;i:2;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:1;}i:3;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:35;}i:4;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:22:"Change SQL DB hostname";i:1;i:3;i:2;i:35;}i:2;i:35;}i:5;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:3;}i:2;i:35;}i:6;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:35;}i:7;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:11:"Ensure the ";}i:2;i:68;}i:8;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:79;}i:9;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:6:"master";}i:2;i:81;}i:10;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:87;}i:11;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:16:" database under ";}i:2;i:89;}i:12;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:105;}i:13;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:16:"System Databases";}i:2;i:107;}i:14;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:123;}i:15;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:54:" is selected, then run the following query, where the ";}i:2;i:125;}i:16;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:179;}i:17;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:"sysname";}i:2;i:181;}i:18;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:188;}i:19;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:37:" labels change accordingly. I.E. the ";}i:2;i:190;}i:20;a:3:{i:0;s:13:"emphasis_open";i:1;a:0:{}i:2;i:227;}i:21;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:18:"CurrentMachineName";}i:2;i:229;}i:22;a:3:{i:0;s:14:"emphasis_close";i:1;a:0:{}i:2;i:247;}i:23;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:4:" is ";}i:2;i:249;}i:24;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:253;}i:25;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:"webnet2";}i:2;i:255;}i:26;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:262;}i:27;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:6:", the ";}i:2;i:264;}i:28;a:3:{i:0;s:13:"emphasis_open";i:1;a:0:{}i:2;i:270;}i:29;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:19:"CurrentInstanceName";}i:2;i:272;}i:30;a:3:{i:0;s:14:"emphasis_close";i:1;a:0:{}i:2;i:291;}i:31;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:4:" is ";}i:2;i:293;}i:32;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:297;}i:33;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:10:"SQLEXPRESS";}i:2;i:299;}i:34;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:309;}i:35;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:10:", and the ";}i:2;i:311;}i:36;a:3:{i:0;s:13:"emphasis_open";i:1;a:0:{}i:2;i:321;}i:37;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:13:"NewServerName";}i:2;i:323;}i:38;a:3:{i:0;s:14:"emphasis_close";i:1;a:0:{}i:2;i:336;}i:39;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:4:" is ";}i:2;i:338;}i:40;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:342;}i:41;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:"webnet3";}i:2;i:344;}i:42;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:351;}i:43;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:".";}i:2;i:353;}i:44;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:360;}i:45;a:3:{i:0;s:4:"code";i:1;a:3:{i:0;s:451:"
+DECLARE
+	@CurrentMachineName sysname
+	,@CurrentInstanceName sysname
+	,@NewServerName sysname;
+
+SELECT 
+	@CurrentMachineName = CAST(SERVERPROPERTY('MachineName') AS sysname)
+	,@CurrentInstanceName = CAST(SERVERPROPERTY('InstanceName') AS sysname);
+
+SET @NewServerName = @CurrentMachineName
+	+ COALESCE(N'\' + @CurrentInstanceName, N'');
+
+EXEC sp_dropserver
+	@server = @@SERVERNAME;
+
+EXEC sp_addserver 
+	@server = @NewServerName
+	,@local = 'local';
+GO
+";i:1;N;i:2;N;}i:2;i:360;}i:46;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:822;}i:47;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:31:"Gather MSSQL Server Information";i:1;i:3;i:2;i:822;}i:2;i:822;}i:48;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:3;}i:2;i:822;}i:49;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:822;}i:50;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:11:"Ensure the ";}i:2;i:864;}i:51;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:875;}i:52;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:6:"master";}i:2;i:877;}i:53;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:883;}i:54;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:16:" database under ";}i:2;i:885;}i:55;a:3:{i:0;s:11:"strong_open";i:1;a:0:{}i:2;i:901;}i:56;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:16:"System Databases";}i:2;i:903;}i:57;a:3:{i:0;s:12:"strong_close";i:1;a:0:{}i:2;i:919;}i:58;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:43:" is selected, then run the following query.";}i:2;i:921;}i:59;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:970;}i:60;a:3:{i:0;s:4:"code";i:1;a:3:{i:0;s:257:"
+SELECT 
+  SERVERPROPERTY('productversion') as 'Product Version',
+  SERVERPROPERTY('productlevel') as 'Service Pack', 
+  SERVERPROPERTY('edition') as 'Edition',
+  SERVERPROPERTY('instancename') as 'Instance',
+  SERVERPROPERTY('servername') as 'Server Name'
+";i:1;N;i:2;N;}i:2;i:970;}i:61;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1236;}i:62;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:14:"Orphaned Users";i:1;i:3;i:2;i:1236;}i:2;i:1236;}i:63;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:3;}i:2;i:1236;}i:64;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:1236;}i:65;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:98:"All of these instructions should be done as a database admin, with the restored database selected.";}i:2;i:1261;}i:66;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:1359;}i:67;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:1359;}i:68;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:78:"First, make sure that this is the problem. This will lists the orphaned users:";}i:2;i:1361;}i:69;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:1445;}i:70;a:3:{i:0;s:4:"code";i:1;a:3:{i:0;s:35:"EXEC sp_change_users_login 'Report'";i:1;N;i:2;N;}i:2;i:1445;}i:71;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:1445;}i:72;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:75:"If you already have a login id and password for this user, fix it by doing:";}i:2;i:1490;}i:73;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:1571;}i:74;a:3:{i:0;s:4:"code";i:1;a:3:{i:0;s:45:"EXEC sp_change_users_login 'Auto_Fix', 'user'";i:1;N;i:2;N;}i:2;i:1571;}i:75;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:1571;}i:76;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:81:"If you want to create a new login id and password for this user, fix it by doing:";}i:2;i:1626;}i:77;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:1713;}i:78;a:3:{i:0;s:4:"code";i:1;a:3:{i:0;s:137:"USE <database_name>;
+GO
+sp_change_users_login @Action='update_one', @UserNamePattern='<database_user>', 
+   @LoginName='<login_name>';
+GO";i:1;N;i:2;N;}i:2;i:1713;}i:79;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1860;}i:80;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:21:"Read Transaction Logs";i:1;i:3;i:2;i:1860;}i:2;i:1860;}i:81;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:3;}i:2;i:1860;}i:82;a:3:{i:0;s:4:"code";i:1;a:3:{i:0;s:38:"
+DBCC LOG(databasename, typeofoutput)
+";i:1;N;i:2;N;}i:2;i:1897;}i:83;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:1897;}i:84;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:19:"where typeofoutput:";}i:2;i:1944;}i:85;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:1963;}i:86;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:"
+";}i:2;i:1965;}i:87;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:1966;}i:88;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:62:"
+0: Return only the minimum of information for each operation ";}i:2;i:1968;}i:89;a:3:{i:0;s:6:"entity";i:1;a:1:{i:0;s:2:"--";}i:2;i:2030;}i:90;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:61:" the operation, its context and the transaction ID. (Default)";}i:2;i:2032;}i:91;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:2093;}i:92;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:64:"
+1: As 0, but also retrieve any flags and the log record length.";}i:2;i:2095;}i:93;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:2159;}i:94;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:77:"
+2: As 1, but also retrieve the object name, index name, page ID and slot ID.";}i:2;i:2161;}i:95;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:2238;}i:96;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:46:"
+3: Full informational dump of each operation.";}i:2;i:2240;}i:97;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:2286;}i:98;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:68:"
+4: As 3 but includes a hex dump of the current transaction log row.";}i:2;i:2288;}i:99;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:2356;}i:100;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2356;}i:101;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:2356;}}

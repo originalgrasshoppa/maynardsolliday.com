@@ -1,0 +1,5 @@
+===== Management Node =====
+
+[[services:Plesk:Parallels Panel Automation 11.5:Management Node:SSH:|SSH]]
+
+[[services:Plesk:Parallels Panel Automation 11.5:Management Node:GUI:|GUI]]

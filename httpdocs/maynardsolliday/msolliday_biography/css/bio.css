@@ -1,0 +1,131 @@
+@charset "UTF-8";
+/* CSS Document */
+html {
+	min-height:100%;
+	margin-bottom:10px;
+}
+
+body {
+margin:0;
+padding:0;
+
+}
+#navbar {
+	margin-right: auto;
+	margin-left: auto;
+	width: 640px;
+}
+#navwrapper {
+	background-image: url(../imgs/cloudskyblue.jpg);
+	height: 36px;
+}
+
+
+
+
+p {
+	width: 650px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+/* Career */
+
+
+
+
+
+#wrapper {
+	width: 660px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-left: 2px;
+	padding-top: 15px;
+}
+
+
+/* Education */
+#wrappered {
+	width: 650px;
+	margin-right: auto;
+	margin-left: auto;
+	text-align: left;
+	overflow: visible;
+	padding-top: 15px;
+	padding-right: 0px;
+	padding-left: 15px;
+	font-weight: bolder;
+}
+
+
+/* Entertainment */
+
+
+#tbtitles {
+	font-weight: 900;
+	color: #FFF;
+	width: 60px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 20px;
+	border-bottom-width: thin;
+	border-bottom-style: dotted;
+	border-bottom-color: #FFF;
+}
+
+#movies {
+	background-color: #CCC;
+	width: 457px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
+#books {
+	background-color: #CCC;
+	width: 457px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#bands {
+	background-color: #CCC;
+	width: 457px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#games {
+	background-color: #CCC;
+	width: 457px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+/* Hobbies */
+
+#wrapperh {
+	width: 660px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-left: 2px;
+	padding-top: 15px;
+}
+#list {
+	width: 95px;
+	text-align: left;
+	float: left;
+	padding-left: 225px;
+}
+#list2 {
+	float: right;
+	width: 290px;
+	padding-left: 30px;
+}
+
+#image {
+	width: 462px;
+	padding-right: 99px;
+	padding-left: 99px;
+	float: left;
+}

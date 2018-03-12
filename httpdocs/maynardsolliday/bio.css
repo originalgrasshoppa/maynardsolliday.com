@@ -1,0 +1,299 @@
+@charset "utf-8";
+/* CSS Document */
+html {
+	margin:0px;
+	padding:0px;
+	min-height:100%;
+	font-size:62.5%;
+}
+
+body {
+	margin:0px;
+	padding:0px;
+	background-color: #666;
+	
+}
+
+
+/*Header*/
+#header{
+	top:0;
+	height: 5em;
+	margin-top: 0em;
+	margin-bottom: 0em;
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	background-image: url(imgs/navbarbg.png);
+	padding-bottom: 0em;
+}
+
+/*End of Header*/
+
+/*Navbar*/
+
+.menu {
+	margin-top:.5em;
+}
+
+.menu ul{
+	margin-left: auto;
+	height: 2em;
+	margin-right: auto;
+	margin-top: 0em;
+	font-family: arial;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.menu ul li{
+	list-style: none;
+	display: inline;
+}
+
+.menu ul li a{
+	text-decoration: none;
+	float: none;
+	color: #FFF;
+	margin-top:0em;
+	padding-top: 0em;
+	padding-right: 0em;
+	padding-bottom: 0em;
+	padding-left: 0.5em;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 2em;
+}
+
+.menu ul li a:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 2em;
+	text-decoration: underline;
+}
+
+.menu ul li a:active{
+	border-top-width: .1em;
+	border-right-width: .1em;
+	border-bottom-width: .1em;
+	border-left-width: .1em;
+	border-top-style: inset;
+	border-right-style: inset;
+	border-bottom-style: inset;
+	border-left-style: inset;
+}
+
+#navbar {
+	margin-top: 0em;
+	margin-right: auto;
+	margin-left: auto;
+	width: 15em;
+	height: 4em;
+	padding-top: 1em;
+}
+
+/*End of Navbar*/
+
+
+
+#wrapper {
+	width: 80em;
+	margin-right: auto;
+	margin-left: auto;
+	height: 100%;
+	padding-top: 0em;
+	margin-top: 0em;
+}
+
+
+
+
+
+
+/*content alignment and appearance */
+
+#content {
+	
+	width: 53.33em;
+	margin-right: auto;
+	margin-left: auto;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-top: 0em;
+	font-size: 1.5em;
+	background-color: #CCC;
+	color: #000;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	line-height: 1.25em;
+}
+
+#img {
+	height: 12.6em;
+	width: 13.8em;
+	float: left;
+}
+
+#img1 {
+	margin-top:3em;
+	clear:left;
+	height: 7.35em;
+	width: 20.1em;
+	float: right;
+}
+
+p.bio	{
+	margin-top:3em;
+	margin-bottom:0px;
+}
+
+
+#leftlist {
+	width: 53em;
+	height: 13.5em;
+	text-align: justify;
+}
+
+#leftlist #righttext {
+	padding-right:1em;
+	padding-top:2em;
+	width: 36.5em;
+	float: right;
+	height: 11em;
+}
+#leftlist #leftimg {
+	padding-left:1em;
+	height: 189px;
+	width: 210px;
+	float: left;
+}
+
+#rightlist {
+	height: 11.5em;
+	text-align: justify;
+}
+
+
+#rightlist  #rightimg{
+	padding-top:1.5em;
+	padding-right:1em;
+	float: right;
+	height: 109px;
+	width: 300px;
+}
+
+#rightlist #lefttext {
+	width: 30em;
+	padding-left:1em;
+	float: left;
+	height: 10em;
+}
+
+
+#leftlist1 {
+	width: 53em;
+	height: 10em;
+	text-align: justify;
+}
+
+#rightlist1 {
+	height: 11em;
+	text-align: justify;
+}
+
+#leftlist1 #righttext1 {
+	padding-right:1em;
+	width: 30em;
+	float: right;
+	height: 6.5em;
+}
+#leftlist1 #leftimg1 {
+	padding-left:1em;
+	height: 88px;
+	width: 300px;
+	float: left;
+}
+
+#rightlist1  #rightimg1{
+	margin-top:1.5em;
+	padding-right:1em;
+	float: right;
+	height: 73px;
+	width: 250px;
+}
+
+#rightlist1 #lefttext1 {
+	width: 33.5em;
+	padding-left:1em;
+	float: left;
+	height: 8em;
+}
+
+
+#leftlist2 {
+	width: 53em;
+	height: 13.5em;
+	text-align: justify;
+}
+
+#rightlist2 {
+	height:16em;
+	text-align: justify;
+}
+
+#leftlist2 #righttext2 {
+	padding-top:2em;
+	padding-right:1em;
+	width: 30em;
+	float: right;
+	height: 11em;
+}
+#leftlist2 #leftimg2 {
+	padding-left:1em;
+	height: 225px;
+	width: 300px;
+	float: left;
+}
+
+#rightlist2  #rightimg2{
+	padding-right:1em;
+	float: right;
+	height: 109px;
+	width: 300px;
+}
+
+#rightlist2 #lefttext2 {
+	width: 30em;
+	padding-left:1em;
+	float: left;
+	height: 11em;
+}
+
+
+#leftlist3 {
+	width: 53em;
+	height: 13.5em;
+	text-align: justify;
+}
+
+#leftlist3 #righttext3 {
+	padding-right:1em;
+	width: 30em;
+	float: right;
+	height: 11em;
+}
+#leftlist3 #leftimg3 {
+	padding-left:1em;
+	height: 225px;
+	width: 300px;
+	float: left;
+}
+
+#generic {
+	margin-top:2em;
+}
+
+#footer {
+	padding-top:1em;
+}
+
+#footer .contact {
+	text-align: center;
+}

@@ -1,0 +1,7 @@
+===== Parallels Panel Automation 11.5 =====
+
+[[services:Plesk:Parallels Panel Automation 11.5:Management Node:|Management Node]]
+
+[[services:Plesk:Parallels Panel Automation 11.5:Apache Node:|Apache Node]]
+
+[[services:Plesk:Parallels Panel Automation 11.5:IIS Node:|IIS Node]]

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+
+<style type="text/css">
+
+.gradualshine{
+filter:alpha(opacity=30);
+-moz-opacity:0.3;
+}
+
+p {
+	color: 909090;
+}
+</style>
+
+<script type="text/javascript">
+
+/***********************************************
+* Gradual Highlight image script- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+var baseopacity=30
+
+function slowhigh(which2){
+imgobj=which2
+browserdetect=which2.filters? "ie" : typeof which2.style.MozOpacity=="string"? "mozilla" : ""
+instantset(baseopacity)
+highlighting=setInterval("gradualfade(imgobj)",50)
+}
+
+function slowlow(which2){
+cleartimer()
+instantset(baseopacity)
+}
+
+function instantset(degree){
+if (browserdetect=="mozilla")
+imgobj.style.MozOpacity=degree/100
+else if (browserdetect=="ie")
+imgobj.filters.alpha.opacity=degree
+}
+
+function cleartimer(){
+if (window.highlighting) clearInterval(highlighting)
+}
+
+function gradualfade(cur2){
+if (browserdetect=="mozilla" && cur2.style.MozOpacity<1)
+cur2.style.MozOpacity=Math.min(parseFloat(cur2.style.MozOpacity)+0.1, 0.99)
+else if (browserdetect=="ie" && cur2.filters.alpha.opacity<100)
+cur2.filters.alpha.opacity+=10
+else if (window.highlighting)
+clearInterval(highlighting)
+}
+
+</script>
+
+        <title>Another test on the Home page trick</title>
+
+</head>
+
+<body bgcolor=000000>
+<img border="0" src="home.jpg" width="242" height="93"class="gradualshine" onMouseover="slowhigh(this)" onMouseout="slowlow(this)"> <br /><br />
+
+<a href="cursor.html"><img border="0" src="cursor.jpg" width="322" height="99"class="gradualshine" onMouseover="slowhigh(this)" onMouseout="slowlow(this)"> </a><br /><br />
+
+<a href="game.html"><img border="0" src="game.jpg" width="236" height="93"class="gradualshine" onMouseover="slowhigh(this)" onMouseout="slowlow(this)"></a> <br /><br />
+
+<a href="clock.html"><img border="0" src="clock.jpg" width="263" height="93"class="gradualshine" onMouseover="slowhigh(this)" onMouseout="slowlow(this)"></a> <br /><br />
+
+<a href="effects.html"><img border="0" src="effects.jpg" width="332" height="92"class="gradualshine" onMouseover="slowhigh(this)" onMouseout="slowlow(this)"></a> <br /><br />
+
+<a href="scroller.html"><img border="0" src="scroller.jpg" width="404" height="99"class="gradualshine" onMouseover="slowhigh(this)" onMouseout="slowlow(this)"></a><br /><br />
+
+<a href="textanimation.html"><img border="0" src="textanimation.jpg" width="663" height="93"class="gradualshine" onMouseover="slowhigh(this)" onMouseout="slowlow(this)"></a> <br /><br />
+
+<a href="slideshow.html"><img border="0" src="slideshow.jpg" width="464" height="93"class="gradualshine" onMouseover="slowhigh(this)" onMouseout="slowlow(this)"> </a><br /><br /><br />
+
+
+<p>Return to my <a href="../../originalgrasshoppa/2006-2007assignments.htm">assignments page</a>.<br /><br /><br />
+</p>
+</body>
+</html>

@@ -1,0 +1,1 @@
+sqlcmd <span class="re5">-S</span> 127.0.0.1\SQLEXPRESS <span class="sy0">/</span>U dbBackup <span class="sy0">/</span>P Backupdb <span class="sy0">/</span>Q <span class="st0">&quot;EXEC sp_BackupDatabasesComplex @backupLocation='D:\DB_Backups\', @backupType='F'&quot;</span> <span class="re5">-o</span> D:\DB_Backups\DBbackuplog.txt

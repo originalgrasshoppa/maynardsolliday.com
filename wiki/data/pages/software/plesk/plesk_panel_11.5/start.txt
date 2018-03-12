@@ -1,0 +1,243 @@
+===== Access =====
+
+Vendor phone: Billable, but can get the number from the site listed below.
+
+Vendor website: http://www.parallels.com/support/phone/
+
+Vendor ticket: https://www.parallels.com/support/request/plesk_wizard?Product=Parallels%20Plesk%20Panel
+
+Panel access: https://plesk1.nex-tech.com/
+===== Backups =====
+
+==== Restore individual domains/clients ====
+
+<code>
+D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore D:\Backup\clients\sollidaym\backup_sollidaym_info_1309160400.xml -level clients
+</code>
+
+Required option -level <clients | domains | resellers | server>
+
+==== Restore Email ====
+
+<code>
+D:\Program Files (x86)\Parallels\Plesk\admin\bin\BackupUtils\PSAMailrestore.exe --dump-file="D:\Backup\mail_backup\MailMigrator\backup_3ishow.com_dominmail_1309150400.zip" --logpath="D:\Backup\mail_backup\MailMigrator" --account-file="D:\Backup\mail_backup\MailMigrator\accounts.xml"
+</code>
+
+==== To restore entire server ====
+
+<code>
+D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore <backup repository root>\<server>.xml -level server
+</code>
+
+Note: When the whole server backup is restored, license keys are not restored by default. To restore license keys along with other server content, use the -license option in your restore command.
+
+=== To restore entire server with license keys ===
+
+<code>
+D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore <backup repository root>\<server>.xml -level server -license
+</code>
+
+=== To restore all subscriptions and sites belonging to a reseller ===
+
+<code>
+D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore <backup repository root>\resellers\<reseller ID>\<reseller>.xml -level domains
+</code>
+
+== To restore all reseller accounts ==
+
+<code>
+D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore <backup repository root>\<server>.xml -level resellers
+</code>
+
+==== Applying filter on the specified level ====
+
+To perform a more selective restore, use a filter (the -filter option) which selects for restoring particular objects of the specified level (resellers, customers, subscriptions). The objects are specified by their names, which are domain names for subscriptions, and usernames for resellers and customers. The specification can be done as follows:
+
+== Command line specification ==
+The restore command takes objects identifiers as values of the -filter option defined in the following string: list:<item1>,<item2>,...,<itemN>.
+
+=== File specification ==
+The restore command takes the objects identifiers from the file specified as argument of the -filter option. The file must be in plain text format, and object identifiers are separated by line breaks (that is, one identifier per line).
+
+=== Restore two resellers from a server backup ===
+
+<code>
+pleskrestore --restore <backup repository root>\<server>.xml -level resellers -filter list:JohnDoe,JaneDoe
+</code>
+
+or
+
+<code>
+pleskrestore --restore <upload directory>\<server backup name>.zip -level resellers -filter list:JohnDoe,JaneDoe
+</code> 
+
+==== Restore two subscriptions owned by server administrator ====
+
+<code>
+pleskrestore --restore <backup repository root>\<server>.xml -level domains -filter list:example.com,sample.org
+</code>
+
+==== Restore several subscriptions of a customer defined in a file ====
+
+<code>
+pleskrestore --restore <backup repository root>\resellers\SandyLee\clients\JaneDow\<customer>.xml -level domains -filter <path to the file>\restore-subscriptions.txt
+</code>
+
+===== Plesk Panel Email =====
+
+==== Horde ====
+
+=== Webmail Login ===
+
+**Disable IMAP login**
+\\
+Open the backends.php file.
+
+<code>
+D:\Program Files (x86)\Parallels\Plesk\Webmail\horde\horde\imp\config\backends.php
+</code>
+
+Comment out IMAP server section.
+
+\\
+Find (CTRL+f)
+
+<code>
+$servers['imap'] = array(
+    // ENABLED by default; will connect to IMAP port on local server
+    'disabled' => false,
+    'name' => 'IMAP Server',
+    'hostspec' => 'localhost',
+    'hordeauth' => false,
+    'protocol' => 'imap',
+    'port' => 143,
+    // Plaintext logins are disabled by default on IMAP servers (see RFC 3501
+    // [6.2.3]), so TLS is the only guaranteed authentication available by
+    // default.
+    'secure' => 'tls',
+);
+</code>
+
+Use /* and */ to comment out the entire section.
+
+
+==== Mail Enable ====
+
+=== Panel Usage is Incorrect ===
+
+Verify space in Mail Enable, compare this with the usage in Plesk, by checking under the **Mail** tab under the subscription in the Panel.\\
+If the sizes are different, first check the box next to the mailbox in question then click the **Refresh Usage Stats**.\\
+If this fails to resolve the issue, you will need to sign into the Plesk server, 24.225.12.65.\\
+Open a command prompt as an admin.\\
+Enter the following commands:\\
+<code>
+d:
+cd "Program Files (x86)\Parallels\Plesk\bin"
+repair.exe --update-domain-web-stat -web-site-name example.domain
+</code>
+After the command completes successfully, go back to the panel and repeat the above steps.
+
+=== Logs ===
+Logs are kept at //D:\Program Files (x86)\Parallels\Plesk\Mail Servers\Mail Enable\Logging//
+\\
+Via scheduled task, executing a script, these are copied daily to //D:\Sites\emaillogs.nex-tech.com\httpdocs//
+<code>
+"D:\Program Files (x86)\Parallels\Plesk\Mail Servers\Mail Enable\Logging" "D:\Sites\emaillogs.plesk1.nex-tech.com\httpdocs" /s /y
+</code>
+The old logs are purged from the emaillogs.plesk1.nex-tech.com after **30 days** via scheduled task that calls //D:\Scripts\deleteOldBackups.bat//
+<code>
+powershell -file "D:\Scripts\DeleteOldDBbackups.ps1"
+</code>
+This calls on a powershell script:
+<code>
+
+
+#How old file files to delete (in days) 
+$days = 20
+
+#Folder to start looking in (recursively) 
+$targetFolder = "D:\Sites\emaillogs.plesk1.nex-tech.com\httpdocs"
+
+
+#Get the current date.
+$currentDate = Get-Date
+
+#Compute the delete date.
+$deleteDate = $currentDate.AddDays(-$days)
+
+#Get a list of all the old files
+$oldFiles = get-childitem $targetFolder -recurse | Where {$_.lastWriteTime -le $deleteDate}
+
+
+
+
+write-host $deleteDate
+
+#Remove the old files
+foreach ($file in $oldFiles){
+
+    if($oldFiles -eq $null){
+        write-host "No files to delete."
+        break
+    }
+
+    write-host "Removing file: " $file.FullName;
+
+    #delete the file
+    Remove-Item -Force -Recurse $file.FullName
+	
+	
+}
+</code>
+
+===== Subscriptions =====
+==== Create a new subscription ====
+**(There is a timeout period of ten minutes for Plesk log-ins.  No activity causes a log-out.)**
+\\
+Sign in to plesk at [[https://plesk1.nex-tech.com]]
+\\
+Click on the **Customers** tab on the left.
+\\
+{{:software:plesk:plesk_panel_11.5:customers.jpg?200|}}
+\\
+Click **add new customer**
+\\
+{{:software:plesk:plesk_panel_11.5:addcustomer.jpg?direct&300|}}
+\\
+Fill in the Contact Information, the customer **name**, **email**, **address** and **phone number** are required.  **If these are not entered, we will have issues when moving to PPA, the new system.**
+\\
+{{:software:plesk:plesk_panel_11.5:addingcustomer.jpg?direct&300|}}
+\\
+Proceed down the page and fill in the **username** using the last name followed by the first initial.
+The **password** will be the first 5 letters of the username with the first and last letter capitalized followed by the 4 digit year.  **If the username is 5 or less characters, use one less character than the username or it will fail security policy requirements.**
+\\
+{{:software:plesk:plesk_panel_11.5:createpanelaccess.jpg?direct&300|}}
+\\
+The Subscription section is where the actual hosting plan is configured. Enter the customer’s **domain** the **IP address will stay the same.**
+\\
+{{:software:plesk:plesk_panel_11.5:custsubscription.jpg?direct&300|}}
+\\
+The **username** is the domain name, up to a **13 character cap**. 
+The **password** will be the first 5 letters of the username with the first and last letter capitalized followed by the 4 digit year.  **If the username is 5 or less characters, use one less character than the username or it will fail security policy requirements.**
+\\
+{{:software:plesk:plesk_panel_11.5:subscriptionlogin.jpg?direct&300|}}
+\\
+Select the corresponding **Service plan** for the customer’s account, the **Add-on plans** can be added by single-clicking each plan that needs added, then click the right pointing, double arrow.  Without a specific reason, no plan should need any add-ons, if they do receive an add-on plan, please ensure the customer is being billed appropriately for the add-ons.
+\\
+{{:software:plesk:plesk_panel_11.5:serviceplan.jpg?direct&300|}}
+\\
+Then click **OK** to finish the settings and create the account.
+\\
+{{:software:plesk:plesk_panel_11.5:add-ons.jpg?direct&300|}}
+ 
+===== Troubleshooting and Errors =====
+
+==== Assorted write/modify issues with applications ====
+
+In order to address these, the first step should be to adjust a Hosting Setting.  Sign in to the Panel as listed above.  Click **Subscriptions** and then click on the Subscription name.\\
+{{:software:plesk:plesk_panel_11.5:subscriptions.jpg?200|}}\\
+From here click on **Websites & Domains**\\
+{{:software:plesk:plesk_panel_11.5:websites_domains.jpg?200|}}\\
+and then click on **Hosting Settings** next to the domain name.\\
+{{:software:plesk:plesk_panel_11.5:additionalwritemodifypermissions.jpg?200|}}\\
+Scroll to the bottom of this page and place a check next to the **Additional write/modify permissions** and click **OK** at the bottom.

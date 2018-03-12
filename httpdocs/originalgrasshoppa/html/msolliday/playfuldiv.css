@@ -1,0 +1,75 @@
+#container {
+	border-color: black;
+	border-style: solid;
+	border-width: thin;
+width: 600px;
+		margin-left: 200px;
+		}
+
+#one {	color: blue;
+font-family: broadway;
+font-size: 12px;
+	float: left;
+	width: 300px;
+	height: 300px;	
+}
+#two { color: red;
+font-family: chiller;
+float: left;
+	width: 300px;
+	height: 300px;
+font-size: 12px;
+	}
+
+#three { color: yellow;
+font-family: bradley hand itc;
+font-size: 12px;
+float: left;
+	width: 300px;
+	height: 300px;
+	}
+
+
+#four {color: green;
+font-family: arial;
+font-size: 12px;
+float: left;
+width: 300px;
+height: 300px;
+	}
+
+#five { color: violet;
+font-family: papyrus;
+font-size: 12px;
+float: right;
+width: 300px;
+height: 300px;
+	}	
+
+
+
+#six {color: orange;
+font-family:  fiolex girls;
+font-size: 12px;
+float: right;
+width: 300px;
+height: 300px;
+	}
+
+
+#seven {color: #8B7D7B;
+font-family:  forte;
+font-size: 12px;
+float: right;
+width: 300px;
+height: 300px;
+	}
+
+
+#eight {color: #5E2612;
+font-family:  edwardian script itc;
+font-size: 12px;
+float: right;
+width: 300px;
+height: 300px;
+	}

@@ -1,0 +1,23 @@
+
+<h2 class="sectionedit1" id="iis_node">IIS Node</h2>
+<div class="level2">
+
+<p>
+For a new 2012 server the following commands need to be executed &lt;b&gt;BEFORE&lt;/b&gt; it is added to the plesk infrastructure:
+</p>
+<pre class="code">netsh advfirewall firewall add rule name=&quot;WinRM in&quot; protocol=TCP dir=in profile=any localport=5985 remoteip=any localip=any action=allow
+netsh advfirewall firewall add rule name=&quot;POA in&quot; protocol=TCP dir=in profile=any localport=8352 remoteip=any localip=any action=allow
+netsh advfirewall firewall add rule name=&quot;POA in 2&quot; protocol=TCP dir=in profile=any localport=8354 remoteip=any localip=any action=allow
+netsh firewall add portopening TCP 5985 WinRM enable SUBNET
+netsh firewall add portopening TCP 8352 POA enable SUBNET
+netsh firewall add portopening TCP 8354 POA2 enable SUBNET
+sc config winrm start= auto
+sc start winrm
+%windir%\system32\timeout /t 5
+cmd /c winrm put winrm/config/service @{AllowUnencrypted = &quot;true&quot;}
+%windir%\system32\timeout /t 2
+cmd /c winrm put winrm/config/service/Auth @{Basic = &quot;true&quot;}
+%windir%\system32\timeout /t 2
+cmd /c winrm create winrm/config/Listener?Address=*+Transport=http @{Port=&quot;5985&quot;}</pre>
+
+</div>

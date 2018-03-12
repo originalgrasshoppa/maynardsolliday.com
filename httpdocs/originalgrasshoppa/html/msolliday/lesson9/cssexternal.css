@@ -1,0 +1,30 @@
+h1, h2 {
+       color: blue;
+       }
+
+h3, h4 { 
+       color: green;
+       }
+
+h5, h6 {
+       font-family: Comic Sans;
+       }
+
+#lead {
+       color: blue;
+      }
+
+#second {
+        color: green;
+	}
+
+#third {
+       color: red;
+       }
+
+.mick {
+      color: navy;
+      font-weight: bold;
+      font-size: 18px;
+      text-decoration: underline;
+      }

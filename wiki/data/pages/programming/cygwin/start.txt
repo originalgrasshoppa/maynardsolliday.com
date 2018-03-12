@@ -1,0 +1,8 @@
+===== Cygwin =====
+
+==== Delete old files ====
+Create a batch file and paste the following into it.
+<code>c:\cygwin\bin\find /cygdrive/d/MSSQLBU/bak -mtime +0 -iname '*.bak' -delete</code>
+
+==== Split text files into smaller files ====
+<code>split --bytes 5M /cygdrive/f/newfile.txt /cygdrive/f/dbo.txt</code>

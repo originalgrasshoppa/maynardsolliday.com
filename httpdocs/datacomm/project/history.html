@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel='shortcut icon' href='../images/padlock-icon.ico' >
+
+<title>The SSH Protocol</title>
+
+<link href="../index.css" rel="stylesheet" type="text/css" /><!--[if IE]>
+<style type="text/css"> 
+/* place css fixes for all versions of IE in this conditional comment */
+.twoColElsLtHdr #sidebar1 { padding-top: 30px; }
+.twoColElsLtHdr #mainContent { zoom: 1; padding-top: 15px; }
+/* the above proprietary zoom property gives IE the hasLayout it needs to avoid several bugs */
+</style>
+<![endif]-->
+</head>
+
+<body class="twoColElsLtHdr">
+
+<div id="container">
+  <div id="header">
+    <h1 class="h1">SSH - History</h1>
+    
+  <!-- end #header --></div>
+  <div id="sidebar1">
+    <h3>Directory</h3>
+  <div id="menu">
+<a href="index.html"><span>Home</span></a>  
+<a href="architecture.html"><span>Architecture</span></a>
+<a href="history.html"><span>History</span></a>
+<a href="uses.html"><span>Uses</span></a>
+<a href="sources.html"><span>Sources</span></a></div>
+  <!-- end #sidebar1 --></div>
+  <div id="mainContent">
+    <h1 align="center">History</h1>
+       <p class="subheading">Version  1.x</p>
+<p class="indent">In  1995, Tatu Ylönen, a researcher at Helsinki University of  Technology, Finland, designed the first version of the protocol (now  called SSH-1) prompted by a password-sniffing attack at  his university network. The goal of SSH was to replace the  earlier rlogin, TELNET and rsh protocols,  which did not provide strong authentication or guarantee  confidentiality. Ylönen released his implementation asfreeware in  July 1995, and the tool quickly gained in popularity. Towards the end  of 1995, the SSH user base had grown to 20,000 users in fifty  countries.</p>
+    <p class="indent">In  December 1995, Ylönen founded SSH Communications Security to  market and develop SSH. The original version of the SSH software used  various pieces of free software, such as GNU libgmp, but  later versions released by SSH Secure Communications evolved into  increasingly proprietary software.</p>
+    <p class="indent">It  is estimated that, as of 2000, there were 2 million users of SSH.[4]</p>
+    <p class="subheading">Notable  vulnerabilities</p>
+    <p class="indent">In  1998 a vulnerability was described in SSH 1.5 which allowed  unauthorized insertion of content into encrypted SSH stream due to  insufficient data integrity protection from CRC-32 used in  this version of protocol.A fix known as SSH Compensation Attack  Detector was introduced into most implementations. Many of these  updated implementations contained a new integer overflow  vulnerability that allowed attackers to execute arbitrary code with  the privileges of the SSH daemon, typically root.</p>
+    <p class="indent">In  January 2001 a vulnerability was discovered that allows attackers to  modify the last block of an IDEA-encrypted session. The same month,  another vulnerability was discovered that allowed a malicious server  to forward a client authentication to another server.</p>
+    <p class="subheading">Version  1.99</p>
+    <p class="indent">In  January 2006, well after version 2.0 was established, RFC  4253 specified that an SSH server which supports both 2.0 and  prior versions of SSH should identify its protoversion as 1.99. This  is not an actual version but a method to identify backward  compatibility.</p>
+    <p class="subheading">OpenSSH  and OSSH</p>
+    <p class="indent">In  1999, developers wanting a free software version to be available went  back to the older 1.2.12 release of the original SSH program, which  was the last released under an open source license. Björn  Grönvall's OSSH was subsequently developed from this  codebase. Shortly thereafter, OpenBSD developers forked Grönvall's  code and did extensive work on it, creating OpenSSH, which  shipped with the 2.6 release of OpenBSD. From this version, a  &quot;portability&quot; branch was formed to port OpenSSH to other  operating systems. As of 2005, OpenSSH was the single most popular  SSH implementation, coming by default in a large number of operating  systems. OSSH meanwhile has become obsolete.OpenSSH continued to be  maintained and now supports both 1.x and 2.0 versions.</p>
+    <p class="subheading">Version  2.x</p>
+    <p class="indent">&quot;Secsh&quot;  was the official Internet Engineering Task Force's (IETF)  name for the IETF working group responsible for version 2 of the SSH  protocol. In 2006, a revised version of the protocol, SSH-2, was  adopted as a standard. This version is incompatible with SSH-1. SSH-2  features both security and feature improvements over SSH-1. Better  security, for example, comes through Diffie-Hellman key  exchange and strong integrity checking via message  authentication codes. New features of SSH-2 include the ability to  run any number of shell sessions over a single SSH  connection.</p>
+    <p class="subheading">Vulnerabilities</p>
+    <p class="indent">In  November 2008, a vulnerability was discovered for all versions of  SSH, which allowed recovery of up to 32 bits of plaintext from a  block of ciphertext that was encrypted using what was then the  standard default encryption mode, CBC.</p>
+<!-- end #mainContent --></div>
+	<!-- This clearing element should immediately follow the #mainContent div in order to force the #container div to contain all child floats --><br class="clearfloat" />
+   <div id="footer">
+    <p>November 4th 2010.  INT680 Network Architecture and Data Communications I Project.  Members are Drew Price and Mick Solliday.</p>
+  <!-- end #footer --></div>
+<!-- end #container --></div>
+</body>
+</html>

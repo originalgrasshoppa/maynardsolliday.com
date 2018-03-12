@@ -1,0 +1,141 @@
+
+<h2 class="sectionedit1" id="plesk_panel_email">Plesk Panel Email</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT1 SECTION "Plesk Panel Email" [1-31] -->
+<h3 class="sectionedit2" id="horde">Horde</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="webmail_login">Webmail Login</h4>
+<div class="level4">
+
+<p>
+<strong>Disable IMAP login</strong>
+<br/>
+
+Open the backends.php file.
+</p>
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\Webmail\horde\horde\imp\config\backends.php</pre>
+
+<p>
+Comment out IMAP server section.
+</p>
+
+<p>
+<br/>
+
+Find (CTRL+f)
+</p>
+<pre class="code">$servers[&#039;imap&#039;] = array(
+    // ENABLED by default; will connect to IMAP port on local server
+    &#039;disabled&#039; =&gt; false,
+    &#039;name&#039; =&gt; &#039;IMAP Server&#039;,
+    &#039;hostspec&#039; =&gt; &#039;localhost&#039;,
+    &#039;hordeauth&#039; =&gt; false,
+    &#039;protocol&#039; =&gt; &#039;imap&#039;,
+    &#039;port&#039; =&gt; 143,
+    // Plaintext logins are disabled by default on IMAP servers (see RFC 3501
+    // [6.2.3]), so TLS is the only guaranteed authentication available by
+    // default.
+    &#039;secure&#039; =&gt; &#039;tls&#039;,
+);</pre>
+
+<p>
+Use /* and */ to comment out the entire section.
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Horde" [32-790] -->
+<h3 class="sectionedit3" id="mail_enable">Mail Enable</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="panel_usage_is_incorrect">Panel Usage is Incorrect</h4>
+<div class="level4">
+
+<p>
+Verify space in Mail Enable, compare this with the usage in Plesk, by checking under the <strong>Mail</strong> tab under the subscription in the Panel.<br/>
+
+If the sizes are different, first check the box next to the mailbox in question then click the <strong>Refresh Usage Stats</strong>.<br/>
+
+If this fails to resolve the issue, you will need to sign into the Plesk server, 24.225.12.65.<br/>
+
+Open a command prompt as an admin.<br/>
+
+Enter the following commands:<br/>
+
+</p>
+<pre class="code">d:
+cd &quot;Program Files (x86)\Parallels\Plesk\bin&quot;
+repair.exe --update-domain-web-stat -web-site-name example.domain</pre>
+
+<p>
+After the command completes successfully, go back to the panel and repeat the above steps.
+</p>
+
+</div>
+
+<h4 id="logs">Logs</h4>
+<div class="level4">
+
+<p>
+Logs are kept at <em>D:\Program Files (x86)\Parallels\Plesk\Mail Servers\Mail Enable\Logging</em>
+<br/>
+
+Via scheduled task, executing a script, these are copied daily to <em>D:\Sites\emaillogs.nex-tech.com\httpdocs</em>
+</p>
+<pre class="code">&quot;D:\Program Files (x86)\Parallels\Plesk\Mail Servers\Mail Enable\Logging&quot; &quot;D:\Sites\emaillogs.plesk1.nex-tech.com\httpdocs&quot; /s /y</pre>
+
+<p>
+The old logs are purged from the emaillogs.plesk1.nex-tech.com after <strong>30 days</strong> via scheduled task that calls <em>D:\Scripts\deleteOldBackups.bat</em>
+</p>
+<pre class="code">powershell -file &quot;D:\Scripts\DeleteOldDBbackups.ps1&quot;</pre>
+
+<p>
+This calls on a powershell script:
+</p>
+<pre class="code">
+
+#How old file files to delete (in days) 
+$days = 20
+
+#Folder to start looking in (recursively) 
+$targetFolder = &quot;D:\Sites\emaillogs.plesk1.nex-tech.com\httpdocs&quot;
+
+
+#Get the current date.
+$currentDate = Get-Date
+
+#Compute the delete date.
+$deleteDate = $currentDate.AddDays(-$days)
+
+#Get a list of all the old files
+$oldFiles = get-childitem $targetFolder -recurse | Where {$_.lastWriteTime -le $deleteDate}
+
+
+
+
+write-host $deleteDate
+
+#Remove the old files
+foreach ($file in $oldFiles){
+
+    if($oldFiles -eq $null){
+        write-host &quot;No files to delete.&quot;
+        break
+    }
+
+    write-host &quot;Removing file: &quot; $file.FullName;
+
+    #delete the file
+    Remove-Item -Force -Recurse $file.FullName
+	
+	
+}</pre>
+
+</div>
+<!-- EDIT3 SECTION "Mail Enable" [791-] -->

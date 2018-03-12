@@ -1,0 +1,4 @@
+mouseover
+
+onmouseover="document.getElementById('text1').firstChild.style.color = 'red';return true;"
+onmouseout="document.getElementById('text1').firstChild.style.color = '';return true;"

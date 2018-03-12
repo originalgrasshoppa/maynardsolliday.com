@@ -1,0 +1,8 @@
+===== MySQL =====
+
+==== MySQL Backup ====
+
+This code creates a mysqldump of a single database, //information_schemas//, creates a log, and names the file based on a YYYYMMDD format.
+<code>
+C:\mysql\bin\mysqldump.exe --user=root --password=password --dump-date --database information_schemas --log-error=D:\DB_Backups\mySQLbackupLogs.txt --result-file="D:\DB_Backups\MySQL\%DATE:~10,4%%DATE:~4,2%%DATE:~7,2%.sql"
+</code>

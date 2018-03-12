@@ -1,0 +1,354 @@
+
+<h2 class="sectionedit1" id="access">Access</h2>
+<div class="level2">
+
+<p>
+Vendor phone: Billable, but can get the number from the site listed below.
+</p>
+
+<p>
+Vendor website: <a href="http://www.parallels.com/support/phone/" class="urlextern" title="http://www.parallels.com/support/phone/"  rel="nofollow">http://www.parallels.com/support/phone/</a>
+</p>
+
+<p>
+Vendor ticket: <a href="https://www.parallels.com/support/request/plesk_wizard?Product=Parallels%20Plesk%20Panel" class="urlextern" title="https://www.parallels.com/support/request/plesk_wizard?Product=Parallels%20Plesk%20Panel"  rel="nofollow">https://www.parallels.com/support/request/plesk_wizard?Product=Parallels%20Plesk%20Panel</a>
+</p>
+
+<p>
+Panel access: <a href="https://plesk1.nex-tech.com/" class="urlextern" title="https://plesk1.nex-tech.com/"  rel="nofollow">https://plesk1.nex-tech.com/</a>
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Access" [1-301] -->
+<h2 class="sectionedit2" id="backups">Backups</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT2 SECTION "Backups" [302-322] -->
+<h3 class="sectionedit3" id="restore_individual_domains_clients">Restore individual domains/clients</h3>
+<div class="level3">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore D:\Backup\clients\sollidaym\backup_sollidaym_info_1309160400.xml -level clients</pre>
+
+<p>
+Required option -level &lt;clients | domains | resellers | server&gt;
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Restore individual domains/clients" [323-595] -->
+<h3 class="sectionedit4" id="restore_email">Restore Email</h3>
+<div class="level3">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\admin\bin\BackupUtils\PSAMailrestore.exe --dump-file=&quot;D:\Backup\mail_backup\MailMigrator\backup_3ishow.com_dominmail_1309150400.zip&quot; --logpath=&quot;D:\Backup\mail_backup\MailMigrator&quot; --account-file=&quot;D:\Backup\mail_backup\MailMigrator\accounts.xml&quot;</pre>
+
+</div>
+<!-- EDIT4 SECTION "Restore Email" [596-920] -->
+<h3 class="sectionedit5" id="to_restore_entire_server">To restore entire server</h3>
+<div class="level3">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore &lt;backup repository root&gt;\&lt;server&gt;.xml -level server</pre>
+
+<p>
+Note: When the whole server backup is restored, license keys are not restored by default. To restore license keys along with other server content, use the -license option in your restore command.
+</p>
+
+</div>
+
+<h4 id="to_restore_entire_server_with_license_keys">To restore entire server with license keys</h4>
+<div class="level4">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore &lt;backup repository root&gt;\&lt;server&gt;.xml -level server -license</pre>
+
+</div>
+
+<h4 id="to_restore_all_subscriptions_and_sites_belonging_to_a_reseller">To restore all subscriptions and sites belonging to a reseller</h4>
+<div class="level4">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore &lt;backup repository root&gt;\resellers\&lt;reseller ID&gt;\&lt;reseller&gt;.xml -level domains</pre>
+
+</div>
+
+<h5 id="to_restore_all_reseller_accounts">To restore all reseller accounts</h5>
+<div class="level5">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore &lt;backup repository root&gt;\&lt;server&gt;.xml -level resellers</pre>
+
+</div>
+<!-- EDIT5 SECTION "To restore entire server" [921-1892] -->
+<h3 class="sectionedit6" id="applying_filter_on_the_specified_level">Applying filter on the specified level</h3>
+<div class="level3">
+
+<p>
+To perform a more selective restore, use a filter (the -filter option) which selects for restoring particular objects of the specified level (resellers, customers, subscriptions). The objects are specified by their names, which are domain names for subscriptions, and usernames for resellers and customers. The specification can be done as follows:
+</p>
+
+</div>
+
+<h5 id="command_line_specification">Command line specification</h5>
+<div class="level5">
+
+<p>
+The restore command takes objects identifiers as values of the -filter option defined in the following string: list:&lt;item1&gt;,&lt;item2&gt;,…,&lt;itemN&gt;.
+</p>
+
+</div>
+
+<h4 id="file_specification">File specification</h4>
+<div class="level4">
+
+<p>
+The restore command takes the objects identifiers from the file specified as argument of the -filter option. The file must be in plain text format, and object identifiers are separated by line breaks (that is, one identifier per line).
+</p>
+
+</div>
+
+<h4 id="restore_two_resellers_from_a_server_backup">Restore two resellers from a server backup</h4>
+<div class="level4">
+<pre class="code">pleskrestore --restore &lt;backup repository root&gt;\&lt;server&gt;.xml -level resellers -filter list:JohnDoe,JaneDoe</pre>
+
+<p>
+or
+</p>
+<pre class="code">pleskrestore --restore &lt;upload directory&gt;\&lt;server backup name&gt;.zip -level resellers -filter list:JohnDoe,JaneDoe</pre>
+
+</div>
+<!-- EDIT6 SECTION "Applying filter on the specified level" [1893-3043] -->
+<h3 class="sectionedit7" id="restore_two_subscriptions_owned_by_server_administrator">Restore two subscriptions owned by server administrator</h3>
+<div class="level3">
+<pre class="code">pleskrestore --restore &lt;backup repository root&gt;\&lt;server&gt;.xml -level domains -filter list:example.com,sample.org</pre>
+
+</div>
+<!-- EDIT7 SECTION "Restore two subscriptions owned by server administrator" [3044-3238] -->
+<h3 class="sectionedit8" id="restore_several_subscriptions_of_a_customer_defined_in_a_file">Restore several subscriptions of a customer defined in a file</h3>
+<div class="level3">
+<pre class="code">pleskrestore --restore &lt;backup repository root&gt;\resellers\SandyLee\clients\JaneDow\&lt;customer&gt;.xml -level domains -filter &lt;path to the file&gt;\restore-subscriptions.txt</pre>
+
+</div>
+<!-- EDIT8 SECTION "Restore several subscriptions of a customer defined in a file" [3239-3493] -->
+<h2 class="sectionedit9" id="plesk_panel_email">Plesk Panel Email</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT9 SECTION "Plesk Panel Email" [3494-3524] -->
+<h3 class="sectionedit10" id="horde">Horde</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="webmail_login">Webmail Login</h4>
+<div class="level4">
+
+<p>
+<strong>Disable IMAP login</strong>
+<br/>
+
+Open the backends.php file.
+</p>
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\Webmail\horde\horde\imp\config\backends.php</pre>
+
+<p>
+Comment out IMAP server section.
+</p>
+
+<p>
+<br/>
+
+Find (CTRL+f)
+</p>
+<pre class="code">$servers[&#039;imap&#039;] = array(
+    // ENABLED by default; will connect to IMAP port on local server
+    &#039;disabled&#039; =&gt; false,
+    &#039;name&#039; =&gt; &#039;IMAP Server&#039;,
+    &#039;hostspec&#039; =&gt; &#039;localhost&#039;,
+    &#039;hordeauth&#039; =&gt; false,
+    &#039;protocol&#039; =&gt; &#039;imap&#039;,
+    &#039;port&#039; =&gt; 143,
+    // Plaintext logins are disabled by default on IMAP servers (see RFC 3501
+    // [6.2.3]), so TLS is the only guaranteed authentication available by
+    // default.
+    &#039;secure&#039; =&gt; &#039;tls&#039;,
+);</pre>
+
+<p>
+Use /* and */ to comment out the entire section.
+</p>
+
+</div>
+<!-- EDIT10 SECTION "Horde" [3525-4283] -->
+<h3 class="sectionedit11" id="mail_enable">Mail Enable</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="panel_usage_is_incorrect">Panel Usage is Incorrect</h4>
+<div class="level4">
+
+<p>
+Verify space in Mail Enable, compare this with the usage in Plesk, by checking under the <strong>Mail</strong> tab under the subscription in the Panel.<br/>
+
+If the sizes are different, first check the box next to the mailbox in question then click the <strong>Refresh Usage Stats</strong>.<br/>
+
+If this fails to resolve the issue, you will need to sign into the Plesk server, 24.225.12.65.<br/>
+
+Open a command prompt as an admin.<br/>
+
+Enter the following commands:<br/>
+
+</p>
+<pre class="code">d:
+cd &quot;Program Files (x86)\Parallels\Plesk\bin&quot;
+repair.exe --update-domain-web-stat -web-site-name example.domain</pre>
+
+<p>
+After the command completes successfully, go back to the panel and repeat the above steps.
+</p>
+
+</div>
+
+<h4 id="logs">Logs</h4>
+<div class="level4">
+
+<p>
+Logs are kept at <em>D:\Program Files (x86)\Parallels\Plesk\Mail Servers\Mail Enable\Logging</em>
+<br/>
+
+Via scheduled task, executing a script, these are copied daily to <em>D:\Sites\emaillogs.nex-tech.com\httpdocs</em>
+</p>
+<pre class="code">&quot;D:\Program Files (x86)\Parallels\Plesk\Mail Servers\Mail Enable\Logging&quot; &quot;D:\Sites\emaillogs.plesk1.nex-tech.com\httpdocs&quot; /s /y</pre>
+
+<p>
+The old logs are purged from the emaillogs.plesk1.nex-tech.com after <strong>30 days</strong> via scheduled task that calls <em>D:\Scripts\deleteOldBackups.bat</em>
+</p>
+<pre class="code">powershell -file &quot;D:\Scripts\DeleteOldDBbackups.ps1&quot;</pre>
+
+<p>
+This calls on a powershell script:
+</p>
+<pre class="code">
+
+#How old file files to delete (in days) 
+$days = 20
+
+#Folder to start looking in (recursively) 
+$targetFolder = &quot;D:\Sites\emaillogs.plesk1.nex-tech.com\httpdocs&quot;
+
+
+#Get the current date.
+$currentDate = Get-Date
+
+#Compute the delete date.
+$deleteDate = $currentDate.AddDays(-$days)
+
+#Get a list of all the old files
+$oldFiles = get-childitem $targetFolder -recurse | Where {$_.lastWriteTime -le $deleteDate}
+
+
+
+
+write-host $deleteDate
+
+#Remove the old files
+foreach ($file in $oldFiles){
+
+    if($oldFiles -eq $null){
+        write-host &quot;No files to delete.&quot;
+        break
+    }
+
+    write-host &quot;Removing file: &quot; $file.FullName;
+
+    #delete the file
+    Remove-Item -Force -Recurse $file.FullName
+	
+	
+}</pre>
+
+</div>
+<!-- EDIT11 SECTION "Mail Enable" [4284-6326] -->
+<h2 class="sectionedit12" id="subscriptions">Subscriptions</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT12 SECTION "Subscriptions" [6327-6352] -->
+<h3 class="sectionedit13" id="create_a_new_subscription">Create a new subscription</h3>
+<div class="level3">
+
+<p>
+<strong>(There is a timeout period of ten minutes for Plesk log-ins.  No activity causes a log-out.)</strong>
+<br/>
+
+Sign in to plesk at <a href="https://plesk1.nex-tech.com" class="urlextern" title="https://plesk1.nex-tech.com"  rel="nofollow">https://plesk1.nex-tech.com</a>
+<br/>
+
+Click on the <strong>Customers</strong> tab on the left.
+<br/>
+
+<a href="/lib/exe/detail.php?id=software%3Aplesk%3Aplesk_panel_11.5%3Astart&amp;media=software:plesk:plesk_panel_11.5:customers.jpg" class="media" title="software:plesk:plesk_panel_11.5:customers.jpg"><img src="/lib/exe/fetch.php?w=200&amp;tok=e8e3ee&amp;media=software:plesk:plesk_panel_11.5:customers.jpg" class="media" alt="" width="200" /></a>
+<br/>
+
+Click <strong>add new customer</strong>
+<br/>
+
+<a href="/lib/exe/fetch.php?media=software:plesk:plesk_panel_11.5:addcustomer.jpg" class="media" title="software:plesk:plesk_panel_11.5:addcustomer.jpg"><img src="/lib/exe/fetch.php?w=300&amp;tok=1cf0ed&amp;media=software:plesk:plesk_panel_11.5:addcustomer.jpg" class="media" alt="" width="300" /></a>
+<br/>
+
+Fill in the Contact Information, the customer <strong>name</strong>, <strong>email</strong>, <strong>address</strong> and <strong>phone number</strong> are required.  <strong>If these are not entered, we will have issues when moving to PPA, the new system.</strong>
+<br/>
+
+<a href="/lib/exe/fetch.php?media=software:plesk:plesk_panel_11.5:addingcustomer.jpg" class="media" title="software:plesk:plesk_panel_11.5:addingcustomer.jpg"><img src="/lib/exe/fetch.php?w=300&amp;tok=1bad83&amp;media=software:plesk:plesk_panel_11.5:addingcustomer.jpg" class="media" alt="" width="300" /></a>
+<br/>
+
+Proceed down the page and fill in the <strong>username</strong> using the last name followed by the first initial.
+The <strong>password</strong> will be the first 5 letters of the username with the first and last letter capitalized followed by the 4 digit year.  <strong>If the username is 5 or less characters, use one less character than the username or it will fail security policy requirements.</strong>
+<br/>
+
+<a href="/lib/exe/fetch.php?media=software:plesk:plesk_panel_11.5:createpanelaccess.jpg" class="media" title="software:plesk:plesk_panel_11.5:createpanelaccess.jpg"><img src="/lib/exe/fetch.php?w=300&amp;tok=f497da&amp;media=software:plesk:plesk_panel_11.5:createpanelaccess.jpg" class="media" alt="" width="300" /></a>
+<br/>
+
+The Subscription section is where the actual hosting plan is configured. Enter the customer’s <strong>domain</strong> the <strong>IP address will stay the same.</strong>
+<br/>
+
+<a href="/lib/exe/fetch.php?media=software:plesk:plesk_panel_11.5:custsubscription.jpg" class="media" title="software:plesk:plesk_panel_11.5:custsubscription.jpg"><img src="/lib/exe/fetch.php?w=300&amp;tok=6e09a1&amp;media=software:plesk:plesk_panel_11.5:custsubscription.jpg" class="media" alt="" width="300" /></a>
+<br/>
+
+The <strong>username</strong> is the domain name, up to a <strong>13 character cap</strong>. 
+The <strong>password</strong> will be the first 5 letters of the username with the first and last letter capitalized followed by the 4 digit year.  <strong>If the username is 5 or less characters, use one less character than the username or it will fail security policy requirements.</strong>
+<br/>
+
+<a href="/lib/exe/fetch.php?media=software:plesk:plesk_panel_11.5:subscriptionlogin.jpg" class="media" title="software:plesk:plesk_panel_11.5:subscriptionlogin.jpg"><img src="/lib/exe/fetch.php?w=300&amp;tok=02a72f&amp;media=software:plesk:plesk_panel_11.5:subscriptionlogin.jpg" class="media" alt="" width="300" /></a>
+<br/>
+
+Select the corresponding <strong>Service plan</strong> for the customer’s account, the <strong>Add-on plans</strong> can be added by single-clicking each plan that needs added, then click the right pointing, double arrow.  Without a specific reason, no plan should need any add-ons, if they do receive an add-on plan, please ensure the customer is being billed appropriately for the add-ons.
+<br/>
+
+<a href="/lib/exe/fetch.php?media=software:plesk:plesk_panel_11.5:serviceplan.jpg" class="media" title="software:plesk:plesk_panel_11.5:serviceplan.jpg"><img src="/lib/exe/fetch.php?w=300&amp;tok=bf6fe0&amp;media=software:plesk:plesk_panel_11.5:serviceplan.jpg" class="media" alt="" width="300" /></a>
+<br/>
+
+Then click <strong>OK</strong> to finish the settings and create the account.
+<br/>
+
+<a href="/lib/exe/fetch.php?media=software:plesk:plesk_panel_11.5:add-ons.jpg" class="media" title="software:plesk:plesk_panel_11.5:add-ons.jpg"><img src="/lib/exe/fetch.php?w=300&amp;tok=d2a406&amp;media=software:plesk:plesk_panel_11.5:add-ons.jpg" class="media" alt="" width="300" /></a>
+</p>
+
+</div>
+<!-- EDIT13 SECTION "Create a new subscription" [6353-8672] -->
+<h2 class="sectionedit14" id="troubleshooting_and_errors">Troubleshooting and Errors</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT14 SECTION "Troubleshooting and Errors" [8673-8712] -->
+<h3 class="sectionedit15" id="assorted_write_modify_issues_with_applications">Assorted write/modify issues with applications</h3>
+<div class="level3">
+
+<p>
+In order to address these, the first step should be to adjust a Hosting Setting.  Sign in to the Panel as listed above.  Click <strong>Subscriptions</strong> and then click on the Subscription name.<br/>
+
+<a href="/lib/exe/detail.php?id=software%3Aplesk%3Aplesk_panel_11.5%3Astart&amp;media=software:plesk:plesk_panel_11.5:subscriptions.jpg" class="media" title="software:plesk:plesk_panel_11.5:subscriptions.jpg"><img src="/lib/exe/fetch.php?w=200&amp;tok=ac4dd7&amp;media=software:plesk:plesk_panel_11.5:subscriptions.jpg" class="media" alt="" width="200" /></a><br/>
+
+From here click on <strong>Websites &amp; Domains</strong><br/>
+
+<a href="/lib/exe/detail.php?id=software%3Aplesk%3Aplesk_panel_11.5%3Astart&amp;media=software:plesk:plesk_panel_11.5:websites_domains.jpg" class="media" title="software:plesk:plesk_panel_11.5:websites_domains.jpg"><img src="/lib/exe/fetch.php?w=200&amp;tok=0358eb&amp;media=software:plesk:plesk_panel_11.5:websites_domains.jpg" class="media" alt="" width="200" /></a><br/>
+
+and then click on <strong>Hosting Settings</strong> next to the domain name.<br/>
+
+<a href="/lib/exe/detail.php?id=software%3Aplesk%3Aplesk_panel_11.5%3Astart&amp;media=software:plesk:plesk_panel_11.5:additionalwritemodifypermissions.jpg" class="media" title="software:plesk:plesk_panel_11.5:additionalwritemodifypermissions.jpg"><img src="/lib/exe/fetch.php?w=200&amp;tok=10a951&amp;media=software:plesk:plesk_panel_11.5:additionalwritemodifypermissions.jpg" class="media" alt="" width="200" /></a><br/>
+
+Scroll to the bottom of this page and place a check next to the <strong>Additional write/modify permissions</strong> and click <strong>OK</strong> at the bottom.
+</p>
+
+</div>
+<!-- EDIT15 SECTION "Assorted write/modify issues with applications" [8713-] -->

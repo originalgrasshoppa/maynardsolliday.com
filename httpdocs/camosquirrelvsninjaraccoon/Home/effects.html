@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<style>
+<!--
+.intro{
+position:absolute;
+left:0;
+top:0;
+layer-background-color:pink;
+background-color:pink;
+border:0.1px solid pink;
+z-index:10;
+}
+body {
+	color: 999999;
+}
+-->
+</style>
+        <title>Effects</title>
+
+<style type="text/css">
+
+.gradualshine{
+filter:alpha(opacity=30);
+-moz-opacity:0.3;
+}
+
+</style>
+
+<script type="text/javascript">
+
+/***********************************************
+* Gradual Highlight image script- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+var baseopacity=30
+
+function slowhigh(which2){
+imgobj=which2
+browserdetect=which2.filters? "ie" : typeof which2.style.MozOpacity=="string"? "mozilla" : ""
+instantset(baseopacity)
+highlighting=setInterval("gradualfade(imgobj)",50)
+}
+
+function slowlow(which2){
+cleartimer()
+instantset(baseopacity)
+}
+
+function instantset(degree){
+if (browserdetect=="mozilla")
+imgobj.style.MozOpacity=degree/100
+else if (browserdetect=="ie")
+imgobj.filters.alpha.opacity=degree
+}
+
+function cleartimer(){
+if (window.highlighting) clearInterval(highlighting)
+}
+
+function gradualfade(cur2){
+if (browserdetect=="mozilla" && cur2.style.MozOpacity<1)
+cur2.style.MozOpacity=Math.min(parseFloat(cur2.style.MozOpacity)+0.1, 0.99)
+else if (browserdetect=="ie" && cur2.filters.alpha.opacity<100)
+cur2.filters.alpha.opacity+=10
+else if (window.highlighting)
+clearInterval(highlighting)
+}
+
+</script>
+
+
+
+</head>
+
+<body bgcolor="#000000">
+<div id="i1" class="intro"></div><div id="i2" class="intro"></div><div id="i3"
+class="intro"></div><div id="i4" class="intro"></div><div id="i5" class="intro"></div><div
+id="i6" class="intro"></div><div id="i7" class="intro"></div><div id="i8" class="intro"></div>
+<script language="JavaScript1.2">
+
+/*
+Left-Right Stripy Curtain Script- © Dynamic Drive (www.dynamicdrive.com)
+For full source code, 100's more free DHTML scripts, and TOS,
+visit http://www.dynamicdrive.com
+*/
+
+var ns4=document.layers?1:0
+var ie4=document.all?1:0
+var ns6=document.getElementById&&!document.all?1:0
+
+var speed=20
+var temp=new Array()
+var temp2=new Array()
+if (ns4){
+for (i=1;i<=8;i++){
+temp[i]=eval("document.i"+i+".clip")
+temp2[i]=eval("document.i"+i)
+temp[i].width=window.innerWidth
+temp[i].height=window.innerHeight/8
+temp2[i].top=(i-1)*temp[i].height
+}
+}
+else if (ie4||ns6){
+var clipright=ns6?window.innerWidth:document.body.clientWidth
+clipleft=0
+for (i=1;i<=8;i++){
+temp[i]=ns6?document.getElementById("i"+i).style:eval("document.all.i"+i+".style")
+temp[i].width=ns6?window.innerWidth-15:document.body.clientWidth
+temp[i].height=ns6?window.innerHeight/8:document.body.offsetHeight/8
+temp[i].top=(i-1)*parseInt(temp[i].height)
+}
+}
+function openit(){
+window.scrollTo(0,0)
+if (ns4){
+for (i=1;i<=8;i=i+2)
+temp[i].right-=speed
+for (i=2;i<=8;i=i+2)
+temp[i].left+=speed
+if (temp[2].left>window.innerWidth)
+clearInterval(stopit)
+}
+else if (ie4||ns6){
+clipright-=speed
+for (i=1;i<=8;i=i+2){
+temp[i].clip="rect(0 "+clipright+" auto 0)"
+}
+clipleft+=speed
+for (i=2;i<=8;i=i+2){
+temp[i].clip="rect(0 auto auto "+clipleft+")"
+}
+if (clipright<=0){
+if (ns6){
+for (i=1;i<=8;i++)
+temp[i].display="none"
+}
+clearInterval(stopit)
+}
+}
+}
+function gogo(){
+stopit=setInterval("openit()",100)
+}
+gogo()
+</script>
+
+
+
+
+
+<br /><br /><br /><br /><br /><br /><br /><br />
+
+
+<a href="Home.html"><img border="0" src="home.jpg" width="242" height="93"class="gradualshine" onMouseover="slowhigh(this)" onMouseout="slowlow(this)"></a>
+<br />
+<br />
+<br />
+This page effect brought to you by <a href="http://dynamicdrive.com/dynamicindex3/document3.htm">Dynamic drive</a>.  The only place a chinese wombat can kick a russian kiwi birds buttocks.
+</body>
+</html>

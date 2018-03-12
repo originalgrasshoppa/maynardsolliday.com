@@ -1,0 +1,145 @@
+@charset "UTF-8";
+/* CSS Document */
+html {
+	min-height:100%;
+	margin-bottom:10px;
+}
+
+body {
+margin:0;
+padding:0;
+
+}
+#navbar {
+	margin-right: auto;
+	margin-left: auto;
+	width: 768px;
+}
+#navwrapper {
+	background-image: url(../imgs/banner.jpg);
+	height: 36px;
+}
+
+#img {
+	text-align:center;
+}
+
+#footer {
+	clear:both;
+	margin-top:2em;
+	text-align:center;
+
+}
+
+p {
+	width: 650px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+/* Career */
+
+
+
+
+
+#wrapper {
+	width: 660px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-left: 2px;
+	padding-top: 15px;
+	background-image: url(../imgs/logo.gif);
+	background-repeat: repeat;
+}
+
+
+/* History */
+#wrapperhi {
+	width: 650px;
+	margin-right: auto;
+	margin-left: auto;
+	text-align: left;
+	overflow: visible;
+	padding-top: 15px;
+	padding-right: 0px;
+	padding-left: 15px;
+	font-weight: bolder;
+	background-image: url(../imgs/logo.gif);
+}
+
+
+/* News */
+
+
+#tbtitles {
+	font-weight: 900;
+	width: 60px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 20px;
+	border-bottom-width: thin;
+	border-bottom-style: dotted;
+}
+
+#movies {
+	background-color: #CCC;
+	width: 457px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
+#books {
+	background-color: #CCC;
+	width: 457px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#bands {
+	background-color: #CCC;
+	width: 457px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#games {
+	background-color: #CCC;
+	width: 457px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+/* Hobbies */
+
+#wrapperc {
+	width: 660px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-left: 2px;
+	padding-top: 15px;
+	background-image: url(../imgs/logo.gif);
+}
+#list {
+	width: 110px;
+	text-align: left;
+	float: left;
+	padding-left: 200px;
+}
+#list2 {
+	float: right;
+	width: 290px;
+	padding-left: 30px;
+}
+
+p.category {
+	font-weight:bold;
+}
+
+#image {
+	width: 462px;
+	padding-right: 99px;
+	padding-left: 99px;
+	float: left;
+}

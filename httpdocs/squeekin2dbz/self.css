@@ -1,0 +1,43 @@
+@charset "utf-8";
+/* CSS Document */
+
+#updated {
+	font-size: .7em;
+	color: #FFF;
+}
+#content #main {
+	color: #FFF;
+}
+#content #title {
+	color: #FFF;
+	text-align: center;
+}
+#content {
+	background-image: url(div.jpg);
+	width: 740px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-left: 10px;
+}
+.bottom   {
+	text-indent: 25px;
+	margin-top: 0px;
+}
+.upper {
+	margin-bottom: 0px;
+	text-indent: 25px;
+}
+.indent {
+	text-indent: 25px;
+}
+.middle {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-indent: 25px;
+}
+#heading {
+	font-weight: bold;
+	color: #FFF;
+	text-decoration: underline;
+	font-size: 1.15em;
+}

@@ -1,0 +1,57 @@
+
+<h1 class="sectionedit1" id="services">Services</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1 SECTION "Services" [1-23] -->
+<h2 class="sectionedit2" id="fix_wmi_event_id_10">Fix WMI Event ID 10</h2>
+<div class="level2">
+<pre class="code">Event filter with query &quot;SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA &quot;Win32_Processor&quot; AND TargetInstance.LoadPercentage &gt; 99&quot; could not be reactivated in namespace &quot;//./root/CIMV2&quot; because of error 0x80041003. Events cannot be delivered through this filter until the problem is corrected.</pre>
+
+<p>
+Boot into safe mode. First, open services and stop the Windows Management Instrumentation Service. Take ownership of the folder or the contents of the folder “C:\Windows\System32\wbem\Repository.” I&#039;ve done this three times now on different installs and didn&#039;t have any issues after doing this, but I suggest you back up the folder to be certain. Delete the contents of the folder. Reboot. When you boot into Vista, you might notice a half dozen or so application errors…it&#039;s OK.
+Reboot again, and Event ID 10 will be gone, along with the afore mentioned application errors.
+</p>
+
+<p>
+After doing this, MS DTC Service may stop running; you will get this event, even after subsequent reboots:
+</p>
+<pre class="code">Event 4691: The run-time environment was unable to initialize for transactions required to support transactional components. Make sure that MS-DTC is running. (DtcGetTransactionManagerEx(): hr = 0x8004d027)</pre>
+
+<p>
+and
+</p>
+<pre class="code">Event 4427: Failed to initialize the needed name objects. Error Specifics: hr = 0x80004005, d:\rtm\com\complus\dtc\dtc\msdtcprx\src\dtcinit.cpp:571, CmdLine: C:\Windows\system32\dllhost.exe /Processid:{02D4B3F1-FD88-11D1-960D-00805FC79235}, Pid: 3060</pre>
+
+<p>
+This is the way you get rid of these:
+</p>
+
+<p>
+At a command prompt, type the following command: 
+</p>
+<pre class="code">%WINDIR%\System32\msdtc.exe -uninstall</pre>
+
+<p>
+Start Registry Editor, and then remove the following registry keys if they exist:
+</p>
+<ol>
+<li class="level1"><div class="li"> HKEY_CLASSES_ROOT\CID</div>
+</li>
+<li class="level1"><div class="li"> HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MSDTC </div>
+</li>
+<li class="level1"><div class="li"> HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\MSDTC </div>
+</li>
+<li class="level1"><div class="li"> HKEY_LOCAL_MACHINE\SYSTEM\ControlSet002\Services\MSDTC </div>
+</li>
+<li class="level1"><div class="li"> HKEY_LOCAL_MACHINE\Software\Microsoft\MSDTC </div>
+</li>
+</ol>
+
+<p>
+At a command prompt, type:
+</p>
+<pre class="code">%WINDIR%\System32\msdtc.exe -install</pre>
+
+</div>
+<!-- EDIT2 SECTION "Fix WMI Event ID 10" [24-] -->

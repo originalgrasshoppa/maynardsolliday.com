@@ -1,0 +1,64 @@
+===== General MSSQL Issues =====
+
+==== Change SQL DB hostname ====
+Ensure the **master** database under **System Databases** is selected, then run the following query, where the **sysname** labels change accordingly. I.E. the //CurrentMachineName// is **webnet2**, the //CurrentInstanceName// is **SQLEXPRESS**, and the //NewServerName// is **webnet3**.
+<code>
+DECLARE
+	@CurrentMachineName sysname
+	,@CurrentInstanceName sysname
+	,@NewServerName sysname;
+
+SELECT 
+	@CurrentMachineName = CAST(SERVERPROPERTY('MachineName') AS sysname)
+	,@CurrentInstanceName = CAST(SERVERPROPERTY('InstanceName') AS sysname);
+
+SET @NewServerName = @CurrentMachineName
+	+ COALESCE(N'\' + @CurrentInstanceName, N'');
+
+EXEC sp_dropserver
+	@server = @@SERVERNAME;
+
+EXEC sp_addserver 
+	@server = @NewServerName
+	,@local = 'local';
+GO
+</code>
+
+
+==== Gather MSSQL Server Information ====
+Ensure the **master** database under **System Databases** is selected, then run the following query.
+<code>
+SELECT 
+  SERVERPROPERTY('productversion') as 'Product Version',
+  SERVERPROPERTY('productlevel') as 'Service Pack', 
+  SERVERPROPERTY('edition') as 'Edition',
+  SERVERPROPERTY('instancename') as 'Instance',
+  SERVERPROPERTY('servername') as 'Server Name'
+</code>
+==== Orphaned Users ====
+All of these instructions should be done as a database admin, with the restored database selected.
+
+First, make sure that this is the problem. This will lists the orphaned users:
+<code>EXEC sp_change_users_login 'Report'</code>
+
+If you already have a login id and password for this user, fix it by doing:
+<code>EXEC sp_change_users_login 'Auto_Fix', 'user'</code>
+
+If you want to create a new login id and password for this user, fix it by doing:
+<code>USE <database_name>;
+GO
+sp_change_users_login @Action='update_one', @UserNamePattern='<database_user>', 
+   @LoginName='<login_name>';
+GO</code>
+
+==== Read Transaction Logs ====
+<code>
+DBCC LOG(databasename, typeofoutput)
+</code>
+where typeofoutput:\\
+\\
+0: Return only the minimum of information for each operation -- the operation, its context and the transaction ID. (Default)\\
+1: As 0, but also retrieve any flags and the log record length.\\
+2: As 1, but also retrieve the object name, index name, page ID and slot ID.\\
+3: Full informational dump of each operation.\\
+4: As 3 but includes a hex dump of the current transaction log row.

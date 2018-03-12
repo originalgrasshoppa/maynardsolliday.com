@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	
+	<title>I'm Animated!!!</title>
+
+</script>	
+
+<style type="text/css">
+
+.gradualshine{
+filter:alpha(opacity=30);
+-moz-opacity:0.3;
+}
+
+</style>
+<script type="text/javascript">
+
+/***********************************************
+* Gradual Highlight image script- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+var baseopacity=30
+
+function slowhigh(which2){
+imgobj=which2
+browserdetect=which2.filters? "ie" : typeof which2.style.MozOpacity=="string"? "mozilla" : ""
+instantset(baseopacity)
+highlighting=setInterval("gradualfade(imgobj)",50)
+}
+
+function slowlow(which2){
+cleartimer()
+instantset(baseopacity)
+}
+
+function instantset(degree){
+if (browserdetect=="mozilla")
+imgobj.style.MozOpacity=degree/100
+else if (browserdetect=="ie")
+imgobj.filters.alpha.opacity=degree
+}
+
+function cleartimer(){
+if (window.highlighting) clearInterval(highlighting)
+}
+
+function gradualfade(cur2){
+if (browserdetect=="mozilla" && cur2.style.MozOpacity<1)
+cur2.style.MozOpacity=Math.min(parseFloat(cur2.style.MozOpacity)+0.1, 0.99)
+else if (browserdetect=="ie" && cur2.filters.alpha.opacity<100)
+cur2.filters.alpha.opacity+=10
+else if (window.highlighting)
+clearInterval(highlighting)
+}
+
+</script>
+
+
+
+</head>
+
+<body onload="position_at_top();expand()">
+<div style="position:absolute;color:black" id="test"></div>
+
+<script>
+
+//This script created by Steve Bomer (steveb03@yahoo.com)
+//Modified by Dynamic Drive for NS6, additional features
+//Visit Dynamicdrive.com to get it!
+
+//Change the message below
+var themessage="POOF! Squirrels are in your stockings."
+var fontsize=10
+//Below determines how long the message will appear before disappearing. 3000=3 seconds
+var appearfor=3000
+
+function position_at_top(){
+if (document.layers)
+document.test.top=pageYOffset
+else if (document.all){
+test.innerHTML='<div align=center><font face="Arial">'+themessage+'</font></div>'
+setTimeout("test.style.top=document.body.scrollTop+10;test.style.left=document.body.scrollLeft+10",100)
+}
+else if (document.getElementById){
+document.getElementById("test").innerHTML='<div align=center><font face="Arial">'+themessage+'</font></div>'
+document.getElementById("test").style.top=pageYOffset
+}
+}
+
+function expand(){
+if (document.layers){
+document.test.document.write('<div align=center style="font-size:'+fontsize+'px"><font face="Arial">'+themessage+'</font></div>')
+document.test.document.close()
+}
+else if (document.all)
+test.style.fontSize=fontsize+'px'
+else if (document.getElementById)
+document.getElementById("test").style.fontSize=fontsize+'px'
+fontsize+=5
+if (fontsize>90){
+if (document.layers)
+setTimeout("document.test.visibility='hide'",appearfor)
+else if (document.all)
+setTimeout("test.style.visibility='hidden'",appearfor)
+else if (document.getElementById)
+setTimeout("document.getElementById('test').style.visibility='hidden'",appearfor)
+return
+}
+else
+setTimeout("expand()",50)
+}
+
+</script>
+
+<br><br>
+This notification brought to you by <a href=http://www.dynamicdrive.com/dynamicindex10/expandtext.htm>Dynamic Drive</a>. Have you squirreled out recently?
+<br><br><br><br><br><br><br><br>
+<a href=http://www.geocities.com/originalgrasshoppa/Assignments/Home.html><img src="Home.gif"class="gradualshine" onMouseover="slowhigh(this)" onMouseout="slowlow(this)"><a/c>
+
+</body>
+</html>
+

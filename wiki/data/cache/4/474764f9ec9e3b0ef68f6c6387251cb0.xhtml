@@ -1,0 +1,109 @@
+
+<h2 class="sectionedit1" id="backups">Backups</h2>
+<div class="level2">
+
+</div>
+
+<h4 id="perform_a_full_server_backup">Perform a full server backup</h4>
+<div class="level4">
+
+<p>
+Perform a verbose full server backup to the folder Plesk1-nt under the root of the Z drive.
+</p>
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\bin\pleskbackup.exe --server -v --output-file=&quot;z:\Plesk1-nt&quot;</pre>
+
+</div>
+
+<h4 id="restore_individual_domains_clients">Restore individual domains/clients</h4>
+<div class="level4">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore D:\Backup\clients\sollidaym\backup_sollidaym_info_1309160400.xml -level clients</pre>
+
+<p>
+Required option -level &lt;clients | domains | resellers | server&gt;
+</p>
+
+</div>
+
+<h4 id="restore_email">Restore Email</h4>
+<div class="level4">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\admin\bin\BackupUtils\PSAMailrestore.exe --dump-file=&quot;D:\Backup\mail_backup\MailMigrator\backup_3ishow.com_dominmail_1309150400.zip&quot; --logpath=&quot;D:\Backup\mail_backup\MailMigrator&quot; --account-file=&quot;D:\Backup\mail_backup\MailMigrator\accounts.xml&quot;</pre>
+
+</div>
+
+<h4 id="to_restore_entire_server">To restore entire server</h4>
+<div class="level4">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore &lt;backup repository root&gt;\&lt;server&gt;.xml -level server</pre>
+
+<p>
+Note: When the whole server backup is restored, license keys are not restored by default. To restore license keys along with other server content, use the -license option in your restore command.
+</p>
+
+</div>
+
+<h5 id="to_restore_entire_server_with_license_keys">To restore entire server with license keys</h5>
+<div class="level5">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore &lt;backup repository root&gt;\&lt;server&gt;.xml -level server -license</pre>
+
+</div>
+
+<h5 id="to_restore_all_subscriptions_and_sites_belonging_to_a_reseller">To restore all subscriptions and sites belonging to a reseller</h5>
+<div class="level5">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore &lt;backup repository root&gt;\resellers\&lt;reseller ID&gt;\&lt;reseller&gt;.xml -level domains</pre>
+
+</div>
+
+<h5 id="to_restore_all_reseller_accounts">To restore all reseller accounts</h5>
+<div class="level5">
+<pre class="code">D:\Program Files (x86)\Parallels\Plesk\bin\pleskrestore --restore &lt;backup repository root&gt;\&lt;server&gt;.xml -level resellers</pre>
+
+</div>
+
+<h4 id="applying_filter_on_the_specified_level">Applying filter on the specified level</h4>
+<div class="level4">
+
+<p>
+To perform a more selective restore, use a filter (the -filter option) which selects for restoring particular objects of the specified level (resellers, customers, subscriptions). The objects are specified by their names, which are domain names for subscriptions, and usernames for resellers and customers. The specification can be done as follows:
+</p>
+
+</div>
+
+<h5 id="command_line_specification">Command line specification</h5>
+<div class="level5">
+
+<p>
+The restore command takes objects identifiers as values of the -filter option defined in the following string: list:&lt;item1&gt;,&lt;item2&gt;,…,&lt;itemN&gt;.
+</p>
+
+</div>
+
+<h5 id="file_specification">File specification</h5>
+<div class="level5">
+
+<p>
+The restore command takes the objects identifiers from the file specified as argument of the -filter option. The file must be in plain text format, and object identifiers are separated by line breaks (that is, one identifier per line).
+</p>
+
+</div>
+
+<h5 id="restore_two_resellers_from_a_server_backup">Restore two resellers from a server backup</h5>
+<div class="level5">
+<pre class="code">pleskrestore --restore &lt;backup repository root&gt;\&lt;server&gt;.xml -level resellers -filter list:JohnDoe,JaneDoe</pre>
+
+<p>
+or
+</p>
+<pre class="code">pleskrestore --restore &lt;upload directory&gt;\&lt;server backup name&gt;.zip -level resellers -filter list:JohnDoe,JaneDoe</pre>
+
+</div>
+
+<h5 id="restore_two_subscriptions_owned_by_server_administrator">Restore two subscriptions owned by server administrator</h5>
+<div class="level5">
+<pre class="code">pleskrestore --restore &lt;backup repository root&gt;\&lt;server&gt;.xml -level domains -filter list:example.com,sample.org</pre>
+
+</div>
+
+<h5 id="restore_several_subscriptions_of_a_customer_defined_in_a_file">Restore several subscriptions of a customer defined in a file</h5>
+<div class="level5">
+<pre class="code">pleskrestore --restore &lt;backup repository root&gt;\resellers\SandyLee\clients\JaneDow\&lt;customer&gt;.xml -level domains -filter &lt;path to the file&gt;\restore-subscriptions.txt</pre>
+
+</div>

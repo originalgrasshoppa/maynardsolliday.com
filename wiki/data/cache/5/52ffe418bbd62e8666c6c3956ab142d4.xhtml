@@ -1,0 +1,77 @@
+
+<h2 class="sectionedit1" id="iis_7">IIS 7</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT1 SECTION "IIS 7" [1-19] -->
+<h2 class="sectionedit2" id="logging">Logging</h2>
+<div class="level2">
+
+<p>
+Enter the following through command line to force IIS logging and define the log diretory
+</p>
+<pre class="code winbatch">cd <span class="sy0">%</span>windir<span class="sy0">%</span>\system32\inetsrv
+appcmd.exe set config <span class="sy0">-</span>section<span class="co2">:system.applicationHost/sites /siteDefaults.logFile.enabled:&quot;True&quot; /commit:apphost</span>
+appcmd.exe set config <span class="sy0">-</span>section<span class="co2">:system.applicationHost/sites /siteDefaults.logFile.logFormat:&quot;W3C&quot; /commit:apphost</span>
+appcmd.exe set config <span class="sy0">-</span>section<span class="co2">:system.applicationHost/sites /siteDefaults.logFile.directory:&quot;%SystemDrive%\inetpub\logs\LogFiles&quot; /commit:apphost</span></pre>
+
+</div>
+<!-- EDIT2 SECTION "Logging" [20-558] -->
+<h2 class="sectionedit3" id="ssl">SSL</h2>
+<div class="level2">
+
+<p>
+To use multiple bindings on one IP for SSL enter the following command for each binding.  The <em>/site.name:</em> attribute must match the site name, as shown under the Sites folder in IIS, while the <em>bindingInformation</em> needs to be the binding on that site using the SSL.
+</p>
+<pre class="code">C:\Windows\System32\Inetsrv\appcmd set site /site.name:&quot;nex-tech.com&quot; /+bindings.[protocol=&#039;https&#039;,bindingInformation=&#039;*:443:www.nex-tech.com&#039;]</pre>
+
+</div>
+<!-- EDIT3 SECTION "SSL" [559-1007] -->
+<h2 class="sectionedit4" id="errors">Errors</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT4 SECTION "Errors" [1008-1027] -->
+<h3 class="sectionedit5" id="asp">ASP</h3>
+<div class="level3">
+
+<p>
+<strong>Event ID 1000, Source .NET Runtime 2.0 Error, Faulting application w3wp.exe, faulting module unknown</strong>
+<br/>
+
+<br/>
+
+1. Login to the server throwing the error.<br/>
+
+2. Select <em>Start&gt;Run</em><br/>
+
+3. Type &#039;<em>CMD</em>&#039;<br/>
+
+4. Navigate to the directory for the .Net Framework   (example path below)
+</p>
+<pre class="code">cd C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727</pre>
+
+<p>
+5.  Once in the .Net Framework directory type the following command to install the ASP.NET version associated with the tool.<br/>
+
+</p>
+<pre class="code">ASPNET_REGIIS -i</pre>
+
+<p>
+6.  Once the -i option is executed in Step 5, if the ASP.NET worker processes are run by a specific user other than a network service account, run the following command to grant access to that user (if using network service account, you may want to review the following Microsoft KB article as well (option 3- <a href="http://support.microsoft.com/kb/918041/en-us" class="urlextern" title="http://support.microsoft.com/kb/918041/en-us"  rel="nofollow">http://support.microsoft.com/kb/918041/en-us</a>)
+</p>
+<pre class="code">ASPNET_REGIIS -ga user</pre>
+
+<p>
+7.  Once this is complete exit the command prompt by typing the word &#039;<em>EXIT</em>&#039;<br/>
+
+8.  Review the Computer Management Console for the User addition - <em>ASPNET</em> user<br/>
+
+9.  Restart the server<br/>
+
+10. Once the machine has been recycled, log in and execute validation tests.  Review the event application log and the error no longer occurs.<br/>
+
+</p>
+
+</div>
+<!-- EDIT5 SECTION "ASP" [1028-] -->

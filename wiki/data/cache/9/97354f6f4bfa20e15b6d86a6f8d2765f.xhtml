@@ -1,0 +1,99 @@
+
+<h2 class="sectionedit1" id="general_mssql_issues">General MSSQL Issues</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT1 SECTION "General MSSQL Issues" [1-34] -->
+<h3 class="sectionedit2" id="change_sql_db_hostname">Change SQL DB hostname</h3>
+<div class="level3">
+
+<p>
+Ensure the <strong>master</strong> database under <strong>System Databases</strong> is selected, then run the following query, where the <strong>sysname</strong> labels change accordingly. I.E. the <em>CurrentMachineName</em> is <strong>webnet2</strong>, the <em>CurrentInstanceName</em> is <strong>SQLEXPRESS</strong>, and the <em>NewServerName</em> is <strong>webnet3</strong>.
+</p>
+<pre class="code">DECLARE
+	@CurrentMachineName sysname
+	,@CurrentInstanceName sysname
+	,@NewServerName sysname;
+
+SELECT 
+	@CurrentMachineName = CAST(SERVERPROPERTY(&#039;MachineName&#039;) AS sysname)
+	,@CurrentInstanceName = CAST(SERVERPROPERTY(&#039;InstanceName&#039;) AS sysname);
+
+SET @NewServerName = @CurrentMachineName
+	+ COALESCE(N&#039;\&#039; + @CurrentInstanceName, N&#039;&#039;);
+
+EXEC sp_dropserver
+	@server = @@SERVERNAME;
+
+EXEC sp_addserver 
+	@server = @NewServerName
+	,@local = &#039;local&#039;;
+GO</pre>
+
+</div>
+<!-- EDIT2 SECTION "Change SQL DB hostname" [35-821] -->
+<h3 class="sectionedit3" id="gather_mssql_server_information">Gather MSSQL Server Information</h3>
+<div class="level3">
+
+<p>
+Ensure the <strong>master</strong> database under <strong>System Databases</strong> is selected, then run the following query.
+</p>
+<pre class="code">SELECT 
+  SERVERPROPERTY(&#039;productversion&#039;) as &#039;Product Version&#039;,
+  SERVERPROPERTY(&#039;productlevel&#039;) as &#039;Service Pack&#039;, 
+  SERVERPROPERTY(&#039;edition&#039;) as &#039;Edition&#039;,
+  SERVERPROPERTY(&#039;instancename&#039;) as &#039;Instance&#039;,
+  SERVERPROPERTY(&#039;servername&#039;) as &#039;Server Name&#039;</pre>
+
+</div>
+<!-- EDIT3 SECTION "Gather MSSQL Server Information" [822-1235] -->
+<h3 class="sectionedit4" id="orphaned_users">Orphaned Users</h3>
+<div class="level3">
+
+<p>
+All of these instructions should be done as a database admin, with the restored database selected.
+</p>
+
+<p>
+First, make sure that this is the problem. This will lists the orphaned users:
+</p>
+<pre class="code">EXEC sp_change_users_login &#039;Report&#039;</pre>
+
+<p>
+If you already have a login id and password for this user, fix it by doing:
+</p>
+<pre class="code">EXEC sp_change_users_login &#039;Auto_Fix&#039;, &#039;user&#039;</pre>
+
+<p>
+If you want to create a new login id and password for this user, fix it by doing:
+</p>
+<pre class="code">USE &lt;database_name&gt;;
+GO
+sp_change_users_login @Action=&#039;update_one&#039;, @UserNamePattern=&#039;&lt;database_user&gt;&#039;, 
+   @LoginName=&#039;&lt;login_name&gt;&#039;;
+GO</pre>
+
+</div>
+<!-- EDIT4 SECTION "Orphaned Users" [1236-1859] -->
+<h3 class="sectionedit5" id="read_transaction_logs">Read Transaction Logs</h3>
+<div class="level3">
+<pre class="code">DBCC LOG(databasename, typeofoutput)</pre>
+
+<p>
+where typeofoutput:<br/>
+
+<br/>
+
+0: Return only the minimum of information for each operation – the operation, its context and the transaction ID. (Default)<br/>
+
+1: As 0, but also retrieve any flags and the log record length.<br/>
+
+2: As 1, but also retrieve the object name, index name, page ID and slot ID.<br/>
+
+3: Full informational dump of each operation.<br/>
+
+4: As 3 but includes a hex dump of the current transaction log row.
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Read Transaction Logs" [1860-] -->

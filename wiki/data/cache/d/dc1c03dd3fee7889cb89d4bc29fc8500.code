@@ -1,0 +1,126 @@
+<span class="kw1">USE</span> <span class="br0">&#91;</span>master<span class="br0">&#93;</span> 
+<span class="kw1">GO</span> 
+<span class="coMULTI">/****** Object:  StoredProcedure [dbo].[sp_BackupDatabases] ******/</span> 
+<span class="kw1">SET</span> ANSI_NULLS <span class="kw1">ON</span> 
+<span class="kw1">GO</span> 
+<span class="kw1">SET</span> QUOTED_IDENTIFIER <span class="kw1">ON</span> 
+<span class="kw1">GO</span> 
+&nbsp;
+<span class="co1">-- ============================================= </span>
+<span class="co1">-- Author: Microsoft </span>
+<span class="co1">-- Create date: 2010-02-06</span>
+<span class="co1">-- Description: Backup Databases for SQLExpress</span>
+<span class="co1">-- Parameter1: databaseName </span>
+<span class="co1">-- Parameter2: backupType F=full, D=differential, L=log</span>
+<span class="co1">-- Parameter3: backup file location</span>
+<span class="co1">-- =============================================</span>
+&nbsp;
+<span class="kw1">CREATE</span> <span class="kw1">PROCEDURE</span> <span class="br0">&#91;</span>dbo<span class="br0">&#93;</span><span class="sy0">.</span><span class="br0">&#91;</span>sp_BackupDatabasesComplex<span class="br0">&#93;</span>  
+            @databaseName sysname <span class="sy0">=</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+            @backupType <span class="kw1">CHAR</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">,</span>
+            @backupLocation nvarchar<span class="br0">&#40;</span><span class="nu0">200</span><span class="br0">&#41;</span> 
+&nbsp;
+&nbsp;
+<span class="kw1">AS</span> 
+&nbsp;
+       <span class="kw1">SET</span> NOCOUNT <span class="kw1">ON</span>; 
+&nbsp;
+	     <span class="kw1">DECLARE</span> @DBs <span class="kw1">TABLE</span>
+            <span class="br0">&#40;</span>
+                  ID <span class="kw1">INT</span> <span class="kw1">IDENTITY</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
+                  DBNAME nvarchar<span class="br0">&#40;</span><span class="nu0">500</span><span class="br0">&#41;</span>
+            <span class="br0">&#41;</span>
+&nbsp;
+             <span class="co1">--Pick out only databases which are online in case ALL databases are chosen to be backed up</span>
+             <span class="co1">-- If specific database is chosen to be backed up only pick that out from @DBs</span>
+             <span class="kw1">INSERT</span> <span class="kw1">INTO</span> @DBs <span class="br0">&#40;</span>DBNAME<span class="br0">&#41;</span>
+             <span class="kw1">SELECT</span> Name <span class="kw1">FROM</span> master<span class="sy0">.</span>sys<span class="sy0">.</span><span class="kw1">DATABASES</span>
+             <span class="kw1">WHERE</span> state<span class="sy0">=</span><span class="nu0">0</span>
+             <span class="kw1">AND</span> name<span class="sy0">=</span>@DatabaseName
+             <span class="kw1">OR</span> @DatabaseName <span class="kw1">IS</span> <span class="kw1">NULL</span>
+             <span class="kw1">ORDER</span> <span class="kw1">BY</span> Name
+&nbsp;
+            <span class="co1">-- Filter out databases which do not need to backed up</span>
+            <span class="kw1">IF</span> @backupType<span class="sy0">=</span><span class="st0">'F'</span>
+                  <span class="kw1">BEGIN</span>
+                  <span class="kw1">DELETE</span> @DBs <span class="kw1">WHERE</span> DBNAME <span class="kw1">IN</span> <span class="br0">&#40;</span><span class="st0">'tempdb'</span><span class="sy0">,</span><span class="st0">'Northwind'</span><span class="sy0">,</span><span class="st0">'pubs'</span><span class="sy0">,</span><span class="st0">'master'</span><span class="sy0">,</span><span class="st0">'VCalendarMaxJantz'</span><span class="sy0">,</span><span class="st0">'VCalendarNwkccrr'</span><span class="sy0">,</span><span class="st0">'VCalendarPlainvilleLivestock'</span><span class="sy0">,</span><span class="st0">'VCalendarHaysRec'</span><span class="sy0">,</span><span class="st0">'model'</span><span class="sy0">,</span><span class="st0">'msdb'</span><span class="sy0">,</span><span class="st0">'tempdb'</span><span class="sy0">,</span><span class="st0">'AdventureWorks'</span><span class="br0">&#41;</span>
+                  <span class="kw1">END</span>
+            <span class="kw1">ELSE</span> <span class="kw1">IF</span> @backupType<span class="sy0">=</span><span class="st0">'D'</span>
+                  <span class="kw1">BEGIN</span>
+                  <span class="kw1">DELETE</span> @DBs <span class="kw1">WHERE</span> DBNAME <span class="kw1">IN</span> <span class="br0">&#40;</span><span class="st0">'tempdb'</span><span class="sy0">,</span><span class="st0">'Northwind'</span><span class="sy0">,</span><span class="st0">'pubs'</span><span class="sy0">,</span><span class="st0">'master'</span><span class="sy0">,</span><span class="st0">'VCalendarMaxJantz'</span><span class="sy0">,</span><span class="st0">'VCalendarNwkccrr'</span><span class="sy0">,</span><span class="st0">'VCalendarPlainvilleLivestock'</span><span class="sy0">,</span><span class="st0">'VCalendarHaysRec'</span><span class="sy0">,</span><span class="st0">'model'</span><span class="sy0">,</span><span class="st0">'msdb'</span><span class="sy0">,</span><span class="st0">'tempdb'</span><span class="sy0">,</span><span class="st0">'AdventureWorks'</span><span class="br0">&#41;</span>
+                  <span class="kw1">END</span>
+            <span class="kw1">ELSE</span> <span class="kw1">IF</span> @backupType<span class="sy0">=</span><span class="st0">'L'</span>
+                  <span class="kw1">BEGIN</span>
+                  <span class="kw1">DELETE</span> @DBs <span class="kw1">WHERE</span> DBNAME <span class="kw1">IN</span> <span class="br0">&#40;</span><span class="st0">'tempdb'</span><span class="sy0">,</span><span class="st0">'Northwind'</span><span class="sy0">,</span><span class="st0">'pubs'</span><span class="sy0">,</span><span class="st0">'master'</span><span class="sy0">,</span><span class="st0">'VCalendarMaxJantz'</span><span class="sy0">,</span><span class="st0">'VCalendarNwkccrr'</span><span class="sy0">,</span><span class="st0">'VCalendarPlainvilleLivestock'</span><span class="sy0">,</span><span class="st0">'VCalendarHaysRec'</span><span class="sy0">,</span><span class="st0">'model'</span><span class="sy0">,</span><span class="st0">'msdb'</span><span class="sy0">,</span><span class="st0">'tempdb'</span><span class="sy0">,</span><span class="st0">'AdventureWorks'</span><span class="br0">&#41;</span>
+                  <span class="kw1">END</span>
+            <span class="kw1">ELSE</span>
+                  <span class="kw1">BEGIN</span>
+                  <span class="kw1">RETURN</span>
+                  <span class="kw1">END</span>
+&nbsp;
+            <span class="co1">-- Declare variables</span>
+            <span class="kw1">DECLARE</span> @BackupName <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="br0">&#41;</span>
+            <span class="kw1">DECLARE</span> @BackupFile <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">100</span><span class="br0">&#41;</span>
+            <span class="kw1">DECLARE</span> @DBNAME <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">300</span><span class="br0">&#41;</span>
+            <span class="kw1">DECLARE</span> @sqlCommand NVARCHAR<span class="br0">&#40;</span><span class="nu0">1000</span><span class="br0">&#41;</span> 
+			<span class="kw1">DECLARE</span> @dateTime NVARCHAR<span class="br0">&#40;</span><span class="nu0">20</span><span class="br0">&#41;</span>
+            <span class="kw1">DECLARE</span> @Loop <span class="kw1">INT</span>                  
+&nbsp;
+&nbsp;
+            <span class="co1">-- Loop through the databases one by one</span>
+            <span class="kw1">SELECT</span> @Loop <span class="sy0">=</span> <span class="kw1">MIN</span><span class="br0">&#40;</span>ID<span class="br0">&#41;</span> <span class="kw1">FROM</span> @DBs
+&nbsp;
+      WHILE @Loop <span class="kw1">IS</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span>
+      <span class="kw1">BEGIN</span>
+&nbsp;
+<span class="co1">-- Database Names have to be in [dbname] format since some have - or _ in their name</span>
+      <span class="kw1">SET</span> @DBNAME <span class="sy0">=</span> <span class="st0">'['</span><span class="sy0">+</span><span class="br0">&#40;</span><span class="kw1">SELECT</span> DBNAME <span class="kw1">FROM</span> @DBs <span class="kw1">WHERE</span> ID <span class="sy0">=</span> @Loop<span class="br0">&#41;</span><span class="sy0">+</span><span class="st0">']'</span>
+&nbsp;
+<span class="co1">-- Set the current date and time n yyyyhhmmss format</span>
+      <span class="kw1">SET</span> @dateTime <span class="sy0">=</span> <span class="kw1">CONVERT</span><span class="br0">&#40;</span><span class="kw1">CHAR</span><span class="br0">&#40;</span><span class="nu0">20</span><span class="br0">&#41;</span><span class="sy0">,</span> GetDate<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="nu0">126</span><span class="br0">&#41;</span>
+	  <span class="co1">--REPLACE(CONVERT(VARCHAR(10), GETDATE(), 101), '/', '') AS [MMDDYYYY]</span>
+	  <span class="co1">--REPLACE(CONVERT(VARCHAR, GETDATE(),101),'/','') + '_' +  REPLACE(CONVERT(VARCHAR, GETDATE(),108),':','')  </span>
+	<span class="co1">--REPLACE(CONVERT(VARCHAR(10), GETDATE(), 101), '/', '') AS [YYYYMMDD]</span>
+&nbsp;
+	  <span class="co1">-- SET @backupLocation = 'D:\DB_Backups\'+@dateTime+'\'</span>
+&nbsp;
+<span class="co1">-- Create backup filename in path\filename.extension format for full,diff and log backups</span>
+      <span class="kw1">IF</span> @backupType <span class="sy0">=</span> <span class="st0">'F'</span>
+            <span class="kw1">SET</span> @BackupFile <span class="sy0">=</span> @backupLocation<span class="sy0">+</span><span class="kw1">REPLACE</span><span class="br0">&#40;</span><span class="kw1">REPLACE</span><span class="br0">&#40;</span>@DBNAME<span class="sy0">,</span> <span class="st0">'['</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="st0">']'</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">+</span> <span class="st0">'_FULL_'</span><span class="sy0">+</span> @dateTime<span class="sy0">+</span> <span class="st0">'.BAK'</span>
+      <span class="kw1">ELSE</span> <span class="kw1">IF</span> @backupType <span class="sy0">=</span> <span class="st0">'D'</span>
+            <span class="kw1">SET</span> @BackupFile <span class="sy0">=</span> @backupLocation<span class="sy0">+</span><span class="kw1">REPLACE</span><span class="br0">&#40;</span><span class="kw1">REPLACE</span><span class="br0">&#40;</span>@DBNAME<span class="sy0">,</span> <span class="st0">'['</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="st0">']'</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">+</span> <span class="st0">'_DIFF_'</span><span class="sy0">+</span> @dateTime<span class="sy0">+</span> <span class="st0">'.BAK'</span>
+      <span class="kw1">ELSE</span> <span class="kw1">IF</span> @backupType <span class="sy0">=</span> <span class="st0">'L'</span>
+            <span class="kw1">SET</span> @BackupFile <span class="sy0">=</span> @backupLocation<span class="sy0">+</span><span class="kw1">REPLACE</span><span class="br0">&#40;</span><span class="kw1">REPLACE</span><span class="br0">&#40;</span>@DBNAME<span class="sy0">,</span> <span class="st0">'['</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="st0">']'</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">+</span> <span class="st0">'_LOG_'</span><span class="sy0">+</span> @dateTime<span class="sy0">+</span> <span class="st0">'.TRN'</span>
+&nbsp;
+<span class="co1">-- Provide the backup a name for storing in the media</span>
+      <span class="kw1">IF</span> @backupType <span class="sy0">=</span> <span class="st0">'F'</span>
+            <span class="kw1">SET</span> @BackupName <span class="sy0">=</span> <span class="kw1">REPLACE</span><span class="br0">&#40;</span><span class="kw1">REPLACE</span><span class="br0">&#40;</span>@DBNAME<span class="sy0">,</span><span class="st0">'['</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="st0">']'</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span> <span class="sy0">+</span><span class="st0">' full backup for '</span><span class="sy0">+</span> @dateTime
+      <span class="kw1">IF</span> @backupType <span class="sy0">=</span> <span class="st0">'D'</span>
+            <span class="kw1">SET</span> @BackupName <span class="sy0">=</span> <span class="kw1">REPLACE</span><span class="br0">&#40;</span><span class="kw1">REPLACE</span><span class="br0">&#40;</span>@DBNAME<span class="sy0">,</span><span class="st0">'['</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="st0">']'</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span> <span class="sy0">+</span><span class="st0">' differential backup for '</span><span class="sy0">+</span> @dateTime
+      <span class="kw1">IF</span> @backupType <span class="sy0">=</span> <span class="st0">'L'</span>
+            <span class="kw1">SET</span> @BackupName <span class="sy0">=</span> <span class="kw1">REPLACE</span><span class="br0">&#40;</span><span class="kw1">REPLACE</span><span class="br0">&#40;</span>@DBNAME<span class="sy0">,</span><span class="st0">'['</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="st0">']'</span><span class="sy0">,</span><span class="st0">''</span><span class="br0">&#41;</span> <span class="sy0">+</span><span class="st0">' log backup for '</span><span class="sy0">+</span> @dateTime
+&nbsp;
+<span class="co1">-- Generate the dynamic SQL command to be executed</span>
+&nbsp;
+       <span class="kw1">IF</span> @backupType <span class="sy0">=</span> <span class="st0">'F'</span> 
+                  <span class="kw1">BEGIN</span>
+               <span class="kw1">SET</span> @sqlCommand <span class="sy0">=</span> <span class="st0">'BACKUP DATABASE '</span> <span class="sy0">+</span>@DBNAME<span class="sy0">+</span>  <span class="st0">' TO DISK = '</span><span class="st0">''</span><span class="sy0">+</span>@BackupFile<span class="sy0">+</span> <span class="st0">''</span><span class="st0">' WITH INIT, NAME= '</span><span class="st0">''</span> <span class="sy0">+</span>@BackupName<span class="sy0">+</span><span class="st0">''</span><span class="st0">', NOSKIP, NOFORMAT'</span>
+                  <span class="kw1">END</span>
+       <span class="kw1">IF</span> @backupType <span class="sy0">=</span> <span class="st0">'D'</span>
+                  <span class="kw1">BEGIN</span>
+               <span class="kw1">SET</span> @sqlCommand <span class="sy0">=</span> <span class="st0">'BACKUP DATABASE '</span> <span class="sy0">+</span>@DBNAME<span class="sy0">+</span>  <span class="st0">' TO DISK = '</span><span class="st0">''</span><span class="sy0">+</span>@BackupFile<span class="sy0">+</span> <span class="st0">''</span><span class="st0">' WITH DIFFERENTIAL, INIT, NAME= '</span><span class="st0">''</span> <span class="sy0">+</span>@BackupName<span class="sy0">+</span><span class="st0">''</span><span class="st0">', NOSKIP, NOFORMAT'</span>        
+                  <span class="kw1">END</span>
+       <span class="kw1">IF</span> @backupType <span class="sy0">=</span> <span class="st0">'L'</span> 
+                  <span class="kw1">BEGIN</span>
+               <span class="kw1">SET</span> @sqlCommand <span class="sy0">=</span> <span class="st0">'BACKUP LOG '</span> <span class="sy0">+</span>@DBNAME<span class="sy0">+</span>  <span class="st0">' TO DISK = '</span><span class="st0">''</span><span class="sy0">+</span>@BackupFile<span class="sy0">+</span> <span class="st0">''</span><span class="st0">' WITH INIT, NAME= '</span><span class="st0">''</span> <span class="sy0">+</span>@BackupName<span class="sy0">+</span><span class="st0">''</span><span class="st0">', NOSKIP, NOFORMAT'</span>        
+                  <span class="kw1">END</span>
+&nbsp;
+	   <span class="kw1">EXEC</span> master<span class="sy0">.</span>dbo<span class="sy0">.</span>xp_create_subdir @backupLocation
+&nbsp;
+<span class="co1">-- Execute the generated SQL command</span>
+       <span class="kw1">EXEC</span><span class="br0">&#40;</span>@sqlCommand<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">-- Goto the next database</span>
+<span class="kw1">SELECT</span> @Loop <span class="sy0">=</span> <span class="kw1">MIN</span><span class="br0">&#40;</span>ID<span class="br0">&#41;</span> <span class="kw1">FROM</span> @DBs <span class="kw1">WHERE</span> ID<span class="sy0">&gt;</span>@Loop
+&nbsp;
+<span class="kw1">END</span>

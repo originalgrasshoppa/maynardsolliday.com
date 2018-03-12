@@ -1,0 +1,105 @@
+==== To update the repository for Plesk node updates ====
+
+Run the update command on the management node:
+
+<code>
+yum update
+</code>
+Follow this with the following:
+<code>
+yes | cp -r /usr/local/pem/install/tarballs/RHEL/6 /usr/local/pem/install/tarballs/CentOS/
+</code>
+Then you can run the update command on each node in order to pull the updates from the management node.  (This does not apply to the MSSQL node.)
+
+==== Deal with file bloat ====
+
+Command to locate files:
+<code>
+du -a /root | sort -n -r | head -n 50
+</code>
+
+Command to see sizes in directory:
+<code>
+du -sx /var/cache/ppa/updates/PPA_11.5.0/* | sort -n -r | head -n 50
+</code>
+
+Move big folders to temp dir for deletion later:
+<code>
+mv /var/cache/ppa/updates/PPA_11.5.0/UPDATE_03 ArchiveForDeletion_2016030201/UPDATE_03
+</code>
+
+
+==== IP does not belong to any IP pool, but is listed on "IP Addresses" tab. ====
+
+The IP is not used by any service. The difference is that information about it is stored in both, 'psa' and 'plesk' databases this time.
+
+'Plesk' database is running on PostgreSQL engine. To connect it, the following command has to be issued:
+<code>
+psql -Uplesk -h`hostname` plesk
+</code>
+
+IP Address was storing in 'psa.IP_Addresses' table under id 16. To solve the issue, remove two records from 'psa' database:
+<code>
+delete from IP_Addresses where id = 16;
+</code>
+Expected output:
+Query OK, 1 row affected (0.01 sec)
+
+(and to avoid inconsistency):
+
+<code>
+delete from ip_pool where ip_address_id = 16;
+</code>
+Expected output:
+Query OK, 1 row affected (0.01 sec)
+
+one record from 'plesk' db:
+<code>
+delete from configured_ips where ip_id = 24;
+</code>
+
+After these commands are used the IP address is not listed in PA control panel.
+
+
+==== Backups Not Occurring at Correct Time ====
+
+The backup task is executed by Plesk utility backupmng that is launched from root crontab:
+/etc/cron.d/plesk-backup-manager-task 
+<code>
+1,16,31,46	*	*	*	*	root [ -x /usr/local/psa/admin/sbin/backupmng ] && /usr/local/psa/admin/sbin/backupmng >/dev/null 2>&1
+</code>
+
+Sign in to mysql:
+<code>
+mysql -uadmin -p`cat /etc/psa/.psa.shadow ` psa
+</code>
+
+Pull a list of all scheduled backups:
+<code>
+select obj_id, obj_type, last, period, active, backup_time from BackupsScheduled;
+</code>
+
+The utility compares values of psa.BackupsScheduled.last and psa.BackupsScheduled.period in Plesk database, then starts backup if current time is more than (BackupsScheduled.last + BackupsScheduled.period), not in time set in BackupsScheduled.backup_time as it is configured.
+
+
+| obj_id | obj_type | last                | period  | active | backup_time |
+|     42 | domain   | 2016-04-24 11:36:41 |   86400 | true   | 03:30:00    |
+|    458 | domain   | 2016-04-24 11:33:37 |   86400 | true   | 08:47:00    |
+
+
+Empty the value for the "last" backup to force the next backup to happen at the scheduled time:
+<code>
+begin;
+update psa.BackupsScheduled set last='' where obj_id=42;
+commit;
+</code>
+
+Check that the value was changed correctly:
+<code>
+select obj_id, obj_type, last, period, active, backup_time from BackupsScheduled;
+</code>
+
+| obj_id | obj_type | last                | period  | active | backup_time |
+|     42 | domain   | 0000-00-00 00:00:00 |   86400 | true   | 03:30:00    |
+|    458 | domain   | 2016-04-24 11:33:37 |   86400 | true   | 08:47:00    |
+

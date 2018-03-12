@@ -1,0 +1,30 @@
+
+<h3 class="sectionedit1" id="plesk_panel_email">Plesk Panel Email</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="usage_is_incorrect">Usage is Incorrect</h4>
+<div class="level4">
+
+<p>
+Verify space in Mail Enable, compare this with the usage in Plesk, by checking under the <strong>Mail</strong> tab under the subscription in the Panel.<br/>
+
+If the sizes are different, first check the box next to the mailbox in question then click the <strong>Refresh Usage Stats</strong>.<br/>
+
+If this fails to resolve the issue, you will need to sign into the Plesk server, 24.225.12.65.<br/>
+
+Open a command prompt as an admin.<br/>
+
+Enter the following commands:<br/>
+
+</p>
+<pre class="code">d:
+cd &quot;Program Files (x86)\Parallels\Plesk\bin&quot;
+repair.exe --update-domain-web-stat -web-site-name example.domain</pre>
+
+<p>
+After the command completes successfully, go back to the panel and repeat the above steps.
+</p>
+
+</div>

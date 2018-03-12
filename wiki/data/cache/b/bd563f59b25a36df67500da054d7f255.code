@@ -1,0 +1,1 @@
+powershell <span class="sy0">-</span>file <span class="st0">&quot;D:\scripts\DeleteOldDBbackups.ps1&quot;</span>

@@ -1,0 +1,99 @@
+
+<h2 class="sectionedit1" id="apache_node">Apache Node</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT1 SECTION "Apache Node" [1-25] -->
+<h3 class="sectionedit2" id="find_plesk_apache_problem_sites">Find plesk apache problem sites</h3>
+<div class="level3">
+
+<p>
+Use apachetop to load all log files for each site:
+</p>
+<pre class="code">apachetop $(find /data/www/sites/*/logs/ -name &quot;access_log&quot; -print | sed &#039;s/^/-f &#039;/)</pre>
+
+<p>
+Run apachetop and load all site log files exceeding a specified size:
+</p>
+<pre class="code">apachetop $(find /data/www/sites/*/logs/ -type f -size +60k -name &quot;access_log&quot; -print | sed &#039;s/^/-f &#039;/)</pre>
+
+<p>
+Grep for the IP that is showing high usage on httpd in the log files:
+</p>
+<pre class="code">grep &quot;176.53.57.170&quot; /data/www/sites/*/logs/access_log</pre>
+
+</div>
+<!-- EDIT2 SECTION "Find plesk apache problem sites" [26-551] -->
+<h3 class="sectionedit3" id="default_websites_location">Default Websites Location</h3>
+<div class="level3">
+
+<p>
+Knowledge base article: <a href="http://kb.odin.com/en/121189" class="urlextern" title="http://kb.odin.com/en/121189"  rel="nofollow">http://kb.odin.com/en/121189</a>
+</p>
+
+</div>
+
+<h5 id="on_the_apache_service_node">On the Apache service node</h5>
+<div class="level5">
+<pre class="code">  Create new directory for vhosts location, example &quot;/var/www/sites&quot;:</pre>
+<pre class="code">mkdir /var/www/sites</pre>
+
+<p>
+Copy content of old vhost folder to a new directory, because it requires some system folders like .skel, default:
+</p>
+<pre class="code">cp -Rp /var/www/vhosts/* /var/www/sites/</pre>
+
+<p>
+Change the HTTPD_VHOSTS_D value in the/etc/psa/psa.conf to the desired default location:
+</p>
+<pre class="code">grep HTTPD_VHOSTS_D  /etc/psa/psa.conf             </pre>
+
+</div>
+
+<h5 id="on_the_management_node">On the Management Node:</h5>
+<div class="level5">
+
+<p>
+Change corresponding value in the psa database on the Management Node:
+</p>
+
+<p>
+Find Apache node ID using its IP address:
+</p>
+<pre class="code">  mysql&gt; select id,ipAddress from ServiceNodes where ipAddress=&#039;1.2.3.4&#039;;
+  +----+-------------+
+  | id | ipAddress   |
+  +----+-------------+
+  |  3 |  1.2.3.4    |
+  +----+-------------+</pre>
+
+<p>
+Find Apache node parameters:
+</p>
+<pre class="code">  mysql&gt; select * from ServiceNodeEnvironment where serviceNodeId=3 and  name=&#039;HTTPD_VHOSTS_D&#039;;
+  +---------------+---------------+----------------+-----------------+
+  | serviceNodeId | section       | name           | value           |
+  +---------------+---------------+----------------+-----------------+
+  |             3 | configuration | HTTPD_VHOSTS_D | /var/www/vhosts |
+  +---------------+---------------+----------------+-----------------+</pre>
+
+<p>
+Change value to the desired location:
+</p>
+<pre class="code">  mysql&gt; update ServiceNodeEnvironment set value=&#039;/var/www/sites&#039; where serviceNodeId=3 and name=&#039;HTTPD_VHOSTS_D&#039;;</pre>
+
+<p>
+Reconfigure all settings/templates for new vhosts location:
+</p>
+<pre class="code">  /usr/local/psa/admin/sbin/httpdmng --reconfigure-all -service-node 1.2.3.4</pre>
+
+<p>
+Additional information
+</p>
+
+<p>
+Please refer to #118735 article if you to get the instruction how to change default websites location for the IIS service node in Parallels Plesk Automation.
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Default Websites Location" [552-] -->

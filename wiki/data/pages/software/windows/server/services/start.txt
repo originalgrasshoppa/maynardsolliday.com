@@ -1,0 +1,22 @@
+===== Stuck Service =====
+
+If you ever have trouble with a service being stuck in a 'starting' or 'stopping' state, you can run a couple of simple commands to kill the service.
+
+== Query the process ==
+To kill the service you have to know its PID or Process ID. To find this just type the following in at a command prompt:
+
+<code>sc queryex <servicename></code>
+
+Replace 'servicename' with the services registry name. For example: Print Spooler is spooler.
+
+
+== Identify the PID ==
+After running the query you will by presented with a list of details. You will want to locate the PID.
+
+== Run the Taskkill command ==
+
+Now that you have the PID, you can run the following command to kill the hung process:
+
+<code>taskkill /f /pid [PID]</code>
+
+This will force kill the hung service.

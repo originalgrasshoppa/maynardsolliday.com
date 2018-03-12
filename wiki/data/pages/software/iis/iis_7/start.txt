@@ -1,0 +1,44 @@
+===== IIS 7 =====
+
+===== Logging =====
+
+Enter the following through command line to force IIS logging and define the log diretory
+
+<code winbatch>
+cd %windir%\system32\inetsrv
+appcmd.exe set config -section:system.applicationHost/sites /siteDefaults.logFile.enabled:"True" /commit:apphost
+appcmd.exe set config -section:system.applicationHost/sites /siteDefaults.logFile.logFormat:"W3C" /commit:apphost
+appcmd.exe set config -section:system.applicationHost/sites /siteDefaults.logFile.directory:"%SystemDrive%\inetpub\logs\LogFiles" /commit:apphost
+</code>
+
+===== SSL =====
+
+To use multiple bindings on one IP for SSL enter the following command for each binding.  The ///site.name:// attribute must match the site name, as shown under the Sites folder in IIS, while the //bindingInformation// needs to be the binding on that site using the SSL.
+<code>
+C:\Windows\System32\Inetsrv\appcmd set site /site.name:"nex-tech.com" /+bindings.[protocol='https',bindingInformation='*:443:www.nex-tech.com']
+</code> 
+
+===== Errors =====
+
+==== ASP ====
+
+**Event ID 1000, Source .NET Runtime 2.0 Error, Faulting application w3wp.exe, faulting module unknown**
+\\
+\\
+1. Login to the server throwing the error.\\
+2. Select //Start>Run//\\
+3. Type '//CMD//'\\
+4. Navigate to the directory for the .Net Framework   (example path below)
+<code>cd C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727</code>
+5.  Once in the .Net Framework directory type the following command to install the ASP.NET version associated with the tool.\\
+<code>ASPNET_REGIIS -i</code>
+6.  Once the -i option is executed in Step 5, if the ASP.NET worker processes are run by a specific user other than a network service account, run the following command to grant access to that user (if using network service account, you may want to review the following Microsoft KB article as well (option 3- http://support.microsoft.com/kb/918041/en-us)
+<code>ASPNET_REGIIS -ga user</code>
+7.  Once this is complete exit the command prompt by typing the word '//EXIT//'\\
+8.  Review the Computer Management Console for the User addition - //ASPNET// user\\
+9.  Restart the server\\
+10. Once the machine has been recycled, log in and execute validation tests.  Review the event application log and the error no longer occurs.\\
+
+
+
+

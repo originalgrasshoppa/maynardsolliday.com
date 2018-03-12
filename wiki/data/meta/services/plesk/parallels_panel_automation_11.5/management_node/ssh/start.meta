@@ -1,0 +1,15 @@
+a:2:{s:7:"current";a:9:{s:4:"date";a:2:{s:7:"created";i:1460571240;s:8:"modified";i:1461595039;}s:7:"creator";s:4:"Mick";s:4:"user";s:9:"msolliday";s:11:"last_change";a:7:{s:4:"date";i:1461595039;s:2:"ip";s:13:"24.225.11.240";s:4:"type";s:1:"E";s:2:"id";s:72:"services:plesk:parallels_panel_automation_11.5:management_node:ssh:start";s:4:"user";s:9:"msolliday";s:3:"sum";s:40:"[Backups Not Occurring at Correct Time] ";s:5:"extra";s:0:"";}s:11:"contributor";a:1:{s:9:"msolliday";s:4:"Mick";}s:5:"title";s:47:"To update the repository for Plesk node updates";s:11:"description";a:2:{s:15:"tableofcontents";a:4:{i:0;a:4:{s:3:"hid";s:47:"to_update_the_repository_for_plesk_node_updates";s:5:"title";s:47:"To update the repository for Plesk node updates";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:1;a:4:{s:3:"hid";s:20:"deal_with_file_bloat";s:5:"title";s:20:"Deal with file bloat";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:2;a:4:{s:3:"hid";s:67:"ip_does_not_belong_to_any_ip_pool_but_is_listed_on_ip_addresses_tab";s:5:"title";s:71:"IP does not belong to any IP pool, but is listed on "IP Addresses" tab.";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:3;a:4:{s:3:"hid";s:37:"backups_not_occurring_at_correct_time";s:5:"title";s:37:"Backups Not Occurring at Correct Time";s:4:"type";s:2:"ul";s:5:"level";i:3;}}s:8:"abstract";s:383:"To update the repository for Plesk node updates
+
+Run the update command on the management node:
+
+
+yum update
+
+
+Follow this with the following:
+
+
+yes | cp -r /usr/local/pem/install/tarballs/RHEL/6 /usr/local/pem/install/tarballs/CentOS/
+
+
+Then you can run the update command on each node in order to pull the updates from the management node.  (This does not apply to the MSSQL node.)";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:5:{s:4:"date";a:2:{s:7:"created";i:1460571240;s:8:"modified";i:1461595039;}s:7:"creator";s:4:"Mick";s:4:"user";s:9:"msolliday";s:11:"last_change";a:7:{s:4:"date";i:1461595039;s:2:"ip";s:13:"24.225.11.240";s:4:"type";s:1:"E";s:2:"id";s:72:"services:plesk:parallels_panel_automation_11.5:management_node:ssh:start";s:4:"user";s:9:"msolliday";s:3:"sum";s:40:"[Backups Not Occurring at Correct Time] ";s:5:"extra";s:0:"";}s:11:"contributor";a:1:{s:9:"msolliday";s:4:"Mick";}}}
